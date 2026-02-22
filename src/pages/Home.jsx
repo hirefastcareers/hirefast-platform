@@ -27,7 +27,7 @@ function Home() {
     <div className="min-h-screen bg-[#0d2547]">
       {/* Header */}
       <header className="sticky top-0 z-50 bg-[#0d2547] border-b border-white/10 backdrop-blur-sm w-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 sm:h-18">
+        <div className="max-w-6xl mx-auto px-6 flex items-center justify-between h-16 sm:h-18">
           <button
             onClick={() => navigate('/')}
             className="text-white font-black text-xl sm:text-2xl tracking-tight hover:opacity-90 transition"
@@ -52,27 +52,33 @@ function Home() {
       </header>
 
       {/* Hero */}
-      <section className="w-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-6">
+      <section className="w-full relative py-32">
+        {/* Mesh Gradient Background */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-3xl"></div>
+        </div>
+        <div className="relative max-w-6xl mx-auto px-6">
+          <div className="text-center">
+            <h1 className="text-white text-6xl font-black tracking-tight mb-6 leading-tight">
               Indeed gets you applications.
               <br />
               <span className="text-[#f4601a]">HireFast gets you hires.</span>
             </h1>
-            <p className="text-[#e2e8f0] text-lg sm:text-xl mb-10 max-w-2xl mx-auto px-2">
+            <p className="text-[#e2e8f0] text-lg sm:text-xl mb-10 max-w-2xl mx-auto">
               The UK's fastest route from applicant to hire. Built for volume recruitment.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center px-2">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button
                 onClick={() => navigate('/employer/signup')}
-                className="w-full sm:w-auto bg-[#f4601a] text-white px-8 py-4 rounded-xl font-bold text-lg hover:opacity-90 transition shadow-lg shadow-[#f4601a]/20"
+                className="w-full sm:w-auto bg-[#0d2547] text-white px-8 py-4 rounded-full font-bold text-lg hover:opacity-90 transition shadow-lg shadow-[#0d2547]/50"
               >
-                I'm an employer →
+                Get Started →
               </button>
               <button
                 onClick={() => navigate('/jobs')}
-                className="w-full sm:w-auto border-2 border-white text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white hover:text-[#0d2547] transition"
+                className="w-full sm:w-auto border-2 border-white text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-[#0d2547] transition"
               >
                 I'm looking for work →
               </button>
@@ -84,7 +90,7 @@ function Home() {
       {/* Industry Trust Strip */}
       <section className="w-full">
         <FadeInSection>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+          <div className="max-w-6xl mx-auto px-6 py-12 sm:py-16">
             <div className="max-w-5xl mx-auto">
               <p className="text-[#a8c0dc] text-sm sm:text-base font-medium text-center mb-8 sm:mb-10 uppercase tracking-wider px-2">
                 Powering volume hiring across:
@@ -106,67 +112,63 @@ function Home() {
 
       {/* Why HireFast? */}
       <section className="w-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-28">
-          <div className="max-w-6xl mx-auto">
-            <FadeInSection>
-              <h2 className="text-white text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-10 sm:mb-14 px-2">
-                Why HireFast?
-              </h2>
-            </FadeInSection>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-              {features.map(({ icon: Icon, title, description }, i) => (
-                <FadeInSection key={title} delay={i * 100}>
-                  <article className="bg-white/[0.08] backdrop-blur-xl border border-white/20 rounded-2xl p-6 sm:p-8 flex flex-col gap-4 hover:bg-white/[0.12] transition shadow-xl shadow-black/10 h-full">
-                    <div className="w-12 h-12 rounded-xl bg-[#f4601a]/20 backdrop-blur-sm flex items-center justify-center text-[#f4601a] border border-[#f4601a]/30 flex-shrink-0">
-                      <Icon size={24} strokeWidth={2} />
-                    </div>
-                    <h3 className="text-white font-bold text-lg sm:text-xl">{title}</h3>
-                    <p className="text-[#a8c0dc] text-base sm:text-lg leading-relaxed flex-1">
-                      {description}
-                    </p>
-                  </article>
-                </FadeInSection>
-              ))}
-            </div>
+        <div className="max-w-6xl mx-auto px-6 py-16 sm:py-24 lg:py-28">
+          <FadeInSection>
+            <h2 className="text-white text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-10 sm:mb-14">
+              Why HireFast?
+            </h2>
+          </FadeInSection>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+            {features.map(({ icon: Icon, title, description }, i) => (
+              <FadeInSection key={title} delay={i * 100}>
+                <article className="bg-gradient-to-br from-white to-slate-50 border border-slate-100 rounded-3xl p-6 sm:p-8 flex flex-col gap-4 hover:shadow-md transition shadow-sm h-full">
+                  <div className="w-12 h-12 rounded-xl bg-[#f4601a]/20 backdrop-blur-sm flex items-center justify-center text-[#f4601a] border border-[#f4601a]/30 flex-shrink-0">
+                    <Icon size={24} strokeWidth={2} />
+                  </div>
+                  <h3 className="text-[#0d2547] font-bold text-lg sm:text-xl">{title}</h3>
+                  <p className="text-slate-600 text-base sm:text-lg leading-relaxed flex-1">
+                    {description}
+                  </p>
+                </article>
+              </FadeInSection>
+            ))}
           </div>
         </div>
       </section>
 
       {/* From Post to Hire in 48 Hours */}
       <section className="w-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-28">
-          <div className="max-w-6xl mx-auto">
-            <FadeInSection>
-              <h2 className="text-white text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-4 px-2">
-                From Post to Hire in 48 Hours
-              </h2>
-              <p className="text-[#a8c0dc] text-center mb-12 sm:mb-16 max-w-2xl mx-auto px-2">
-                Three steps. No sifting. No ghosting. Just hires.
-              </p>
-            </FadeInSection>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              {steps.map(({ icon: Icon, num, title, description }, i) => (
-                <FadeInSection key={num} delay={i * 120}>
-                  <article className="bg-white/[0.08] backdrop-blur-xl border border-white/20 rounded-2xl p-6 sm:p-8 flex flex-col gap-4 hover:bg-white/[0.12] transition shadow-xl shadow-black/10 relative overflow-hidden h-full">
-                    <div className="absolute top-4 right-4 text-white/10 font-black text-5xl">{num}</div>
-                    <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center text-[#f4601a] border border-white/20 flex-shrink-0">
-                      <Icon size={24} strokeWidth={2} />
-                    </div>
-                    <h3 className="text-white font-bold text-lg sm:text-xl pr-12">Step {num}: {title}</h3>
-                    <p className="text-[#a8c0dc] text-base leading-relaxed flex-1">
-                      {description}
-                    </p>
-                  </article>
-                </FadeInSection>
-              ))}
-            </div>
+        <div className="max-w-6xl mx-auto px-6 py-16 sm:py-24 lg:py-28">
+          <FadeInSection>
+            <h2 className="text-white text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-4">
+              From Post to Hire in 48 Hours
+            </h2>
+            <p className="text-[#a8c0dc] text-center mb-12 sm:mb-16 max-w-2xl mx-auto">
+              Three steps. No sifting. No ghosting. Just hires.
+            </p>
+          </FadeInSection>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {steps.map(({ icon: Icon, num, title, description }, i) => (
+              <FadeInSection key={num} delay={i * 120}>
+                <article className="bg-gradient-to-br from-white to-slate-50 border border-slate-100 rounded-3xl p-6 sm:p-8 flex flex-col gap-4 hover:shadow-md transition shadow-sm relative overflow-hidden h-full">
+                  <div className="absolute top-4 right-4 text-slate-200 font-black text-5xl">{num}</div>
+                  <div className="w-12 h-12 rounded-xl bg-[#f4601a]/20 backdrop-blur-sm flex items-center justify-center text-[#f4601a] border border-[#f4601a]/30 flex-shrink-0">
+                    <Icon size={24} strokeWidth={2} />
+                  </div>
+                  <h3 className="text-[#0d2547] font-bold text-lg sm:text-xl pr-12">Step {num}: {title}</h3>
+                  <p className="text-slate-600 text-base leading-relaxed flex-1">
+                    {description}
+                  </p>
+                </article>
+              </FadeInSection>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Founder's Insight */}
       <section className="w-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-28">
+        <div className="max-w-6xl mx-auto px-6 py-16 sm:py-24 lg:py-28">
           <div className="max-w-5xl mx-auto">
             <FadeInSection>
               <article className="bg-white/[0.08] backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden shadow-xl shadow-black/10 flex flex-col sm:flex-row">
