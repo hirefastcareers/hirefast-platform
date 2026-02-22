@@ -13,24 +13,29 @@ import SalesEnquiry from './pages/SalesEnquiry'
 import EmployerSales from './pages/EmployerSales'
 import DashboardLayout from './layouts/DashboardLayout'
 import Dashboard from './pages/Dashboard'
+import Login from './pages/Login'
+import AdminDashboard from './pages/AdminDashboard'
 import DashboardAnalytics from './pages/DashboardAnalytics'
 import DashboardSettings from './pages/DashboardSettings'
 
 function AppContent() {
   const location = useLocation()
-  const fullBleed = location.pathname === '/' || location.pathname === '/employer/sales' || location.pathname === '/jobs' || location.pathname.startsWith('/jobs/')
+  const fullBleed = location.pathname === '/' || location.pathname === '/login' || location.pathname === '/employer/sales' || location.pathname === '/jobs' || location.pathname.startsWith('/jobs/')
   return (
     <Routes>
-      <Route path="/dashboard" element={<DashboardLayout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="analytics" element={<DashboardAnalytics />} />
-        <Route path="settings" element={<DashboardSettings />} />
+      <Route path="/dashboard" element={<AdminDashboard />}>
+        <Route element={<DashboardLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="analytics" element={<DashboardAnalytics />} />
+          <Route path="settings" element={<DashboardSettings />} />
+        </Route>
       </Route>
       <Route path="*" element={
         <div className={fullBleed ? '' : 'max-w-6xl mx-auto px-6'}>
           <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/employer/signup" element={<EmployerSignup />} />
+              <Route path="/login" element={<Login />} />
               <Route path="/employer/login" element={<EmployerLogin />} />
               <Route path="/employer/dashboard" element={<EmployerDashboardLayout />}>
                 <Route index element={<EmployerDashboard />} />
