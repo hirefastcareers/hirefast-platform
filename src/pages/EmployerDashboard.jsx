@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { Users, UserPlus, MessageCircle, Eye, Loader2 } from 'lucide-react'
 import { supabase } from '../supabase'
 import ApplicantQuickView from '../components/employer/ApplicantQuickView'
+import { getTrustScore, trustScoreStyles } from '../utils/trustScore'
+import { getCommuteRiskLevel } from '../utils/commuteUtils'
 
 const DEMO_EMPLOYER_NAME = 'CloudNine Logistics'
 
@@ -155,7 +157,9 @@ function EmployerDashboard() {
             <thead>
               <tr className="border-b border-slate-100 bg-slate-50/80">
                 <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Name</th>
+                <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Commute</th>
                 <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Email</th>
+                <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Trust</th>
                 <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</th>
                 <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Applied</th>
                 <th className="text-right py-3 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Actions</th>
@@ -164,7 +168,7 @@ function EmployerDashboard() {
             <tbody>
               {applications.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="py-12 text-center text-slate-500">
+                  <td colSpan={7} className="py-12 text-center text-slate-500">
                     No applications yet.
                   </td>
                 </tr>
@@ -172,6 +176,8 @@ function EmployerDashboard() {
                 applications.map((app) => {
                   const status = (app.status || 'new').toLowerCase()
                   const statusClass = statusStyles[status] ?? statusStyles.new
+                  const trust = getTrustScore(app)
+                  const commuteRisk = getCommuteRiskLevel(app.distance_miles)
                   const applied = app.created_at
                     ? new Date(app.created_at).toLocaleDateString('en-GB', {
                         day: 'numeric',
@@ -185,7 +191,23 @@ function EmployerDashboard() {
                       className="border-b border-slate-50 hover:bg-slate-50/50 transition"
                     >
                       <td className="py-3 px-4 font-medium text-slate-900">{app.full_name ?? '—'}</td>
+                      <td className="py-3 px-4">
+                        {commuteRisk ? (
+                          <span title={app.distance_miles != null ? `${app.distance_miles} miles` : 'Commute risk'}>
+                            {commuteRisk === 'green' && <span className="text-lg" aria-label="Low commute risk">🟢</span>}
+                            {commuteRisk === 'amber' && <span className="text-lg" aria-label="Medium commute risk">🟡</span>}
+                            {commuteRisk === 'red' && <span className="text-lg" aria-label="High commute risk">🔴</span>}
+                          </span>
+                        ) : (
+                          <span className="text-slate-400">—</span>
+                        )}
+                      </td>
                       <td className="py-3 px-4 text-slate-600">{app.email ?? '—'}</td>
+                      <td className="py-3 px-4">
+                        <span className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-medium ${trustScoreStyles[trust.level]}`} title={`${trust.label} (${trust.count}/3 checks)`}>
+                          {trust.label}
+                        </span>
+                      </td>
                       <td className="py-3 px-4">
                         <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium capitalize ${statusClass}`}>
                           {status}
@@ -218,6 +240,8 @@ function EmployerDashboard() {
           applications.map((app) => {
             const status = (app.status || 'new').toLowerCase()
             const statusClass = statusStyles[status] ?? statusStyles.new
+            const trust = getTrustScore(app)
+            const commuteRisk = getCommuteRiskLevel(app.distance_miles)
             const applied = app.created_at
               ? new Date(app.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
               : '—'
@@ -227,14 +251,28 @@ function EmployerDashboard() {
                 className="rounded-xl border border-slate-200 bg-white p-4"
               >
                 <div className="flex justify-between items-start gap-2">
-                  <div>
-                    <p className="font-medium text-slate-900">{app.full_name ?? '—'}</p>
-                    <p className="text-sm text-slate-600">{app.email ?? '—'}</p>
-                    <p className="text-xs text-slate-500 mt-1">{applied}</p>
+                  <div className="flex items-center gap-2">
+                    {commuteRisk && (
+                      <span className="text-lg" title={app.distance_miles != null ? `${app.distance_miles} miles` : 'Commute'}>
+                        {commuteRisk === 'green' && '🟢'}
+                        {commuteRisk === 'amber' && '🟡'}
+                        {commuteRisk === 'red' && '🔴'}
+                      </span>
+                    )}
+                    <div>
+                      <p className="font-medium text-slate-900">{app.full_name ?? '—'}</p>
+                      <p className="text-sm text-slate-600">{app.email ?? '—'}</p>
+                      <p className="text-xs text-slate-500 mt-1">{applied}</p>
+                    </div>
                   </div>
-                  <span className={`rounded-full px-2.5 py-1 text-xs font-medium capitalize ${statusClass}`}>
-                    {status}
-                  </span>
+                  <div className="flex flex-col items-end gap-1">
+                    <span className={`rounded-full border px-2.5 py-1 text-xs font-medium ${trustScoreStyles[trust.level]}`}>
+                      {trust.label}
+                    </span>
+                    <span className={`rounded-full px-2.5 py-1 text-xs font-medium capitalize ${statusClass}`}>
+                      {status}
+                    </span>
+                  </div>
                 </div>
                 <button
                   onClick={() => setQuickViewApp(applicationWithJob(app))}

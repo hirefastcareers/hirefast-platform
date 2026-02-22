@@ -9,7 +9,7 @@ export default function TableSkeleton() {
       </div>
       <div className="p-4 flex items-center justify-center gap-2 text-slate-500">
         <Loader2 className="animate-spin" size={20} />
-        <span className="text-sm font-medium">Loading leads…</span>
+        <span className="text-sm font-medium">Loading applications…</span>
       </div>
       <div className="divide-y divide-slate-200/60">
         {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (

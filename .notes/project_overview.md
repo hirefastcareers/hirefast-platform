@@ -7,7 +7,7 @@ Frontend: React (Vite) + Tailwind CSS
 
 Backend/Database: Supabase (Auth, Postgres, Storage)
 
-Design Philosophy: Mobile-first, bold typography, professional but high-energy.
+Design Philosophy: Mobile-first, bold typography, professional but high-energy. The landing page must bifurcate (split) between Employer and Candidate paths. Use a professional 'Dark Mode' or 'High-Contrast' theme that feels like a premium tool (similar to Linear or Stripe).
 
 🧩 Core Problems We Are Solving
 Candidate Drop-off: Shortening the time-to-apply from minutes to seconds.

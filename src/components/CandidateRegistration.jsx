@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { X, CheckCircle2, Loader2, Zap, UserCheck, Mail } from 'lucide-react'
+import { X, CheckCircle2, Loader2, Zap, Mail } from 'lucide-react'
 import { supabase } from '../supabase'
 
 const SKILLS = [
@@ -147,7 +147,7 @@ function CandidateRegistration({ isOpen, onClose }) {
   if (!isOpen) return null
 
   const timelineSteps = [
-    { icon: CheckCircle2, label: "We've got your details", sub: 'You're in the system.' },
+    { icon: CheckCircle2, label: "We've got your details", sub: "You're in the system." },
     { icon: Zap, label: 'We match you with roles', sub: 'Employers see your profile.' },
     { icon: Mail, label: 'Employers get in touch', sub: 'Interviews and offers.' }
   ]
