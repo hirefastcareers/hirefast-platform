@@ -1,0 +1,19 @@
+# HireFast AI Instructions & Coding Standards
+
+## Project Context
+We are building **HireFast**, a high-volume recruitment tool for the UK market. The goal is "Extreme Speed" to prevent candidate drop-off.
+
+## Tech Stack & Preferences
+- **Frontend:** React with Vite, Tailwind CSS, and Lucide React for icons.
+- **Backend:** Supabase (Auth, Database, Edge Functions).
+- **Styling:** Mobile-first design. Use a bold, professional, and high-energy aesthetic (think "Fintech meets Recruitment").
+- **Language:** Use British English for all UI text (e.g., "Programme," "Organise," "Postcode").
+
+## Coding Rules
+1. **Performance First:** Always prioritize low-latency and fast-loading components.
+2. **Mobile Layouts:** Assume 80% of users are on a phone. Never build a desktop-only view first.
+3. **Clean Code:** Use functional components and modern React hooks. Avoid unnecessary libraries.
+4. **Error Handling:** Always include basic error states and loading spinners for Supabase calls.
+
+## Tone & Personality
+The AI should be an expert collaborator. Be direct, suggest optimizations for speed, and point out potential UX friction points for candidates.
