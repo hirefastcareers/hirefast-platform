@@ -1,9 +1,12 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Zap, Filter, MessageCircle, Store, Truck, UtensilsCrossed, FileEdit, Timer, Users, User } from 'lucide-react'
 import FadeInSection from '../components/FadeInSection'
+import CandidateRegistration from '../components/CandidateRegistration'
 
 function Home() {
   const navigate = useNavigate()
+  const [isRegistrationOpen, setIsRegistrationOpen] = useState(false)
 
   const industries = [
     { icon: Store, label: 'Retail' },
@@ -71,7 +74,7 @@ function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button
-                onClick={() => navigate('/employer/signup')}
+                onClick={() => setIsRegistrationOpen(true)}
                 className="w-full sm:w-auto bg-[#0d2547] text-white px-8 py-4 rounded-full font-bold text-lg hover:opacity-90 transition shadow-lg shadow-[#0d2547]/50"
               >
                 Get Started →
@@ -188,6 +191,12 @@ function Home() {
           </div>
         </div>
       </section>
+
+      {/* Candidate Registration Modal */}
+      <CandidateRegistration
+        isOpen={isRegistrationOpen}
+        onClose={() => setIsRegistrationOpen(false)}
+      />
     </div>
   )
 }
