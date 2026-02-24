@@ -1,41 +1,31 @@
-HireFast: Project Overview
-🎯 Mission
-To eliminate candidate drop-off in high-volume UK recruitment by replacing clunky, slow legacy systems with a "speed-first," mobile-optimized experience.
+# HireFast: Project Overview (v2.0 - Master Plan)
 
-🛠 Tech Stack
-Frontend: React (Vite) + Tailwind CSS
+## 🎯 Mission
+To eliminate the "Drop-off Crisis" and the "Ghosting Crisis" in high-volume UK recruitment. HireFast replaces slow, 30-field legacy systems with a 15-second, mobile-first "Express Apply" engine and a "Truth-Driven" recruiter dashboard.
 
-Backend/Database: Supabase (Auth, Postgres, Storage)
+## 🛠 Tech Stack
+- **Frontend:** React (Vite) + Tailwind CSS + Lucide Icons.
+- **Backend/Database:** Supabase (Auth, Postgres, RLS).
+- **Authentication:** Passwordless Magic Links only.
+- **External APIs:** Postcodes.io (Commute calculation).
 
-Design Philosophy: Mobile-first, bold typography, professional but high-energy. The landing page must bifurcate (split) between Employer and Candidate paths. Use a professional 'Dark Mode' or 'High-Contrast' theme that feels like a premium tool (similar to Linear or Stripe).
+## 🧩 The Problems We Are Solving
+1. **Drop-off Crisis:** Reducing application time from minutes to 15 seconds.
+2. **Sifting Fatigue:** Automated ranking using "Truth Data" (Commute distance, Right to Work).
+3. **Ghosting Crisis:** Mutual accountability scores and "Interest Checks" via magic links.
+4. **Recruiter Friction:** Eliminating the "Broadbeam" headache with sector-specific job templates.
 
-🧩 Core Problems We Are Solving
-Candidate Drop-off: Shortening the time-to-apply from minutes to seconds.
+## 🚀 Key Features (Phase 1 & 2)
+- **Rapid-Post Engine:** Sector-specific templates (Logistics, Retail, Hospitality, Care) to post jobs in <30 seconds.
+- **Match Scoring:** Every application gets a suitability % based on commute, experience, and keywords.
+- **Truth Engine:** Postcode-based 🟢/🟡/🔴 Reliability Risk scores.
+- **Multi-Tenant Dashboard:** Recruiters manage multiple client companies with zero data leakage (RLS enforced).
 
-Sifting Fatigue: Automating the initial screening so recruiters don't drown in CVs.
+## 📊 Database Schema (Master)
+- **employers**: `id`, `company_name`, `admin_email`, `industry_sector`
+- **jobs**: `id`, `employer_id`, `recruiter_id`, `title`, `location`, `pay_rate`, `description_template`, `is_active`
+- **applications**: `id`, `job_id`, `employer_id`, `full_name`, `email`, `phone`, `commute_distance`, `match_score`, `status`, `last_interest_check`
 
-UK Compliance: Ensuring data handling aligns with local standards.
-
-🚀 Key Features (Phase 1)
-Magic-Link Login: No passwords to remember for candidates.
-
-Fast-Apply Interface: A Tinder-style or "one-tap" application flow.
-
-Recruiter Dashboard: A clean, high-speed view of the top 10% of candidates.
-## Current Progress (Feb 2026)
-- **Deployment:** Live on Vercel (hirefast-platform.vercel.app).
-- **Features:** - Landing page hero section implemented.
-    - "Get Started" modal is functional.
-    - Connection to Supabase is active (responses are being captured in the database).
-    ### 📊 Database Schema
-- **Table:** `leads`
-- **Columns:** `id`, `created_at`, `full_name`, `email`, `company`, `status`
 ## 💼 Business Model: B2B SaaS
-- **Target Users:** UK Employers (SMEs and High-Volume recruiters).
-- **Architecture:** Multi-tenant. Each Employer has their own workspace.
-- **Candidate Experience:** Ultra-fast, branded to the employer.
-- **Employer Experience:** A dashboard to manage their specific job postings and applicants.
-### 📊 Database Schema (v2 - Multi-tenant)
-- **employers**: id, company_name, admin_email
-- **jobs**: id, employer_id, title, location, is_active
-- **applications**: id, job_id, employer_id, full_name, email, phone, status
+- **Architecture:** Multi-tenant. Data isolated by `employer_id` via Supabase RLS.
+- **Scale:** £50–£100/month initial burn; scaling with volume.

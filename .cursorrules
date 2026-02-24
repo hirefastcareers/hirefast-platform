@@ -1,19 +1,25 @@
-# HireFast AI Instructions & Coding Standards
+# HireFast AI Instructions & Master Coding Standards
 
 ## Project Context
-We are building **HireFast**, a high-volume recruitment tool for the UK market. The goal is "Extreme Speed" to prevent candidate drop-off.
+**HireFast** is a high-velocity, sector-agnostic recruitment engine for the UK. We solve the "Drop-off Crisis" by replacing legacy 30-field job postings with a 15-second "Express Apply" engine. We solve the "Ghosting Crisis" through mutual accountability and AI-driven match scoring.
 
 ## Tech Stack & Preferences
-- **Frontend:** React with Vite, Tailwind CSS, and Lucide React for icons.
-- **Backend:** Supabase (Auth, Database, Edge Functions).
-- **Styling:** Mobile-first design. Use a bold, professional, and high-energy aesthetic (think "Fintech meets Recruitment").
-- **Language:** Use British English for all UI text (e.g., "Programme," "Organise," "Postcode").
+- **Frontend:** React (Vite), Tailwind CSS, Lucide React icons.
+- **Backend:** Supabase (PostgreSQL, RLS, Auth).
+- **Authentication:** Passwordless Magic Links only. NO passwords.
+- **APIs:** Postcodes.io for UK commute/reliability scoring.
 
-## Coding Rules
-1. **Performance First:** Always prioritize low-latency and fast-loading components.
-2. **Mobile Layouts:** Assume 80% of users are on a phone. Never build a desktop-only view first.
-3. **Clean Code:** Use functional components and modern React hooks. Avoid unnecessary libraries.
-4. **Error Handling:** Always include basic error states and loading spinners for Supabase calls.
+## Coding Rules & Logic
+1. **Friction is the Enemy:** If a recruiter has to fill >5 fields to post, or a candidate >3 to apply, suggest a template or automation.
+2. **Mobile-First UX:** 90% of candidates are on phones. Use "Thumb-Friendly" UI (large buttons, card layouts, no hover-states).
+3. **Multi-Tenancy:** Every query must be scoped to `recruiter_id` or `employer_id` via Supabase RLS. No data leakage.
+4. **UK Standardisation:** Use British English (e.g., "Postcode," "Labour," "Organise"). Use **GBP (£)** and **miles**. Dates: **DD/MM/YYYY**.
+5. **The Truth Engine:** Prioritize verified data (Postcode-to-job distance, "Right to Work" status) over subjective candidate bios.
+
+## Feature Implementation Standards
+- **Rapid-Post:** Use pre-built sector templates (Logistics, Retail, Hospitality, Care).
+- **Match Scoring:** Every application needs a Suitability Score (%) based on commute, experience, and eligibility.
+- **Anti-Ghosting:** Include "Interest Check" magic link flows for candidates and "Ghosting Flags" for recruiters.
 
 ## Tone & Personality
-The AI should be an expert collaborator. Be direct, suggest optimizations for speed, and point out potential UX friction points for candidates.
+Expert collaborator. Be direct. If a feature adds friction to the candidate journey, challenge it. Suggest "Speed-First" optimizations for high-volume scaling.

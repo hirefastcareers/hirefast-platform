@@ -8,7 +8,7 @@ import EmployerDashboardJobs from './pages/EmployerDashboardJobs'
 import EmployerDashboardSettings from './pages/EmployerDashboardSettings'
 import PostJob from './pages/PostJob'
 import JobListings from './pages/JobListings'
-import Apply from './pages/Apply'
+import Apply from './pages/Apply.tsx'
 import SalesEnquiry from './pages/SalesEnquiry'
 import EmployerSales from './pages/EmployerSales'
 import DashboardLayout from './layouts/DashboardLayout'
@@ -17,15 +17,17 @@ import Login from './pages/Login'
 import AdminDashboard from './pages/AdminDashboard'
 import DashboardAnalytics from './pages/DashboardAnalytics'
 import DashboardSettings from './pages/DashboardSettings'
+import RecruiterDashboard from './pages/RecruiterDashboard'
 
 function AppContent() {
   const location = useLocation()
-  const fullBleed = location.pathname === '/' || location.pathname === '/login' || location.pathname === '/employer/sales' || location.pathname === '/jobs' || location.pathname.startsWith('/jobs/')
+  const fullBleed = location.pathname === '/' || location.pathname === '/login' || location.pathname === '/employer/sales' || location.pathname === '/jobs' || location.pathname.startsWith('/jobs/') || location.pathname.startsWith('/apply/')
   return (
     <Routes>
       <Route path="/dashboard" element={<AdminDashboard />}>
         <Route element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
+          <Route path="recruiter" element={<RecruiterDashboard />} />
           <Route path="analytics" element={<DashboardAnalytics />} />
           <Route path="settings" element={<DashboardSettings />} />
         </Route>
@@ -45,6 +47,7 @@ function AppContent() {
               <Route path="/employer/post-job" element={<PostJob />} />
               <Route path="/jobs" element={<JobListings />} />
               <Route path="/jobs/:id/apply" element={<Apply />} />
+              <Route path="/apply/:jobId" element={<Apply />} />
               <Route path="/sales-enquiry" element={<SalesEnquiry />} />
               <Route path="/employer/sales" element={<EmployerSales />} />
           </Routes>

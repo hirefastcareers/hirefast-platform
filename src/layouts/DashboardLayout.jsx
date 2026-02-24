@@ -1,11 +1,12 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom'
-import { Users, BarChart3, Settings } from 'lucide-react'
+import { Users, Zap, BarChart3, Settings } from 'lucide-react'
 
 function DashboardLayout() {
   const navigate = useNavigate()
 
   const navItems = [
     { to: '/dashboard', icon: Users, label: 'Leads' },
+    { to: '/dashboard/recruiter', icon: Zap, label: 'Rapid Post' },
     { to: '/dashboard/analytics', icon: BarChart3, label: 'Analytics' },
     { to: '/dashboard/settings', icon: Settings, label: 'Settings' }
   ]
