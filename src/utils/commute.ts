@@ -77,26 +77,51 @@ export function calculateDistance(
 export const haversineMiles = calculateDistance
 
 /**
- * Categorise distance into commute risk level:
- * - &lt; 5 miles: green
- * - 5–15 miles: amber
- * - &gt; 15 miles: red
+ * Sector-specific green zone (miles).
+ * Logistics & Retail: 10 (local focus). Manufacturing: 15. Engineering: 25 (high-skill/pay, travel further).
  */
-export function getCommuteRiskLevel(distanceMiles: number | null): CommuteRiskLevel | null {
+const GREEN_MILES: Record<string, number> = {
+  logistics: 10,
+  retail: 10,
+  manufacturing: 15,
+  engineering: 25,
+}
+
+/** Amber cutoff (miles): red beyond this. */
+const AMBER_MILES: Record<string, number> = {
+  logistics: 20,
+  retail: 20,
+  manufacturing: 28,
+  engineering: 45,
+}
+
+/**
+ * Categorise distance into commute risk level.
+ * - Logistics & Retail: green &lt; 10 mi, amber 10–20 mi, red &gt; 20 mi
+ * - Manufacturing: green &lt; 15 mi, amber 15–28 mi, red &gt; 28 mi
+ * - Engineering: green &lt; 25 mi, amber 25–45 mi, red &gt; 45 mi
+ */
+export function getCommuteRiskLevel(
+  distanceMiles: number | null,
+  sector?: string | null
+): CommuteRiskLevel | null {
   if (distanceMiles == null || typeof distanceMiles !== 'number' || distanceMiles < 0)
     return null
-  if (distanceMiles < 5) return 'green'
-  if (distanceMiles <= 15) return 'amber'
+  const greenMiles = sector ? (GREEN_MILES[sector] ?? 10) : 10
+  const amberMiles = sector ? (AMBER_MILES[sector] ?? 20) : 20
+  if (distanceMiles < greenMiles) return 'green'
+  if (distanceMiles <= amberMiles) return 'amber'
   return 'red'
 }
 
 /**
  * Get distance in miles between two UK postcodes (Postcodes.io + Haversine)
- * and the commute risk level.
+ * and the commute risk level. Pass job sector for sector-specific thresholds (e.g. engineering 20 mi green).
  */
 export async function getCommuteDistanceAndRisk(
   candidatePostcode: string,
-  jobPostcode: string
+  jobPostcode: string,
+  jobSector?: string | null
 ): Promise<CommuteResult> {
   const cand = normalisePostcode(candidatePostcode)
   const job = normalisePostcode(jobPostcode)
@@ -114,7 +139,7 @@ export async function getCommuteDistanceAndRisk(
 
   const miles = calculateDistance(from.lat, from.lng, to.lat, to.lng)
   const rounded = Math.round(miles * 10) / 10
-  const riskLevel = getCommuteRiskLevel(rounded)
+  const riskLevel = getCommuteRiskLevel(rounded, jobSector)
 
   return {
     commute_distance_miles: rounded,

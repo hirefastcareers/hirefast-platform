@@ -5,9 +5,10 @@ import { getCommuteRiskLevel } from '../../utils/commuteUtils'
 export default function ApplicantQuickView({ application, onClose }) {
   if (!application) return null
 
-  const { full_name, email, phone, status, created_at, job, postcode, rtw_document_url, distance_miles } = application
-  const trust = getTrustScore(application)
-  const commuteRisk = getCommuteRiskLevel(distance_miles)
+  const { full_name, email, phone, status, created_at, job, postcode, candidate_postcode, rtw_document_url, distance_miles, commute_distance, commute_risk_level } = application
+  const trust = getTrustScore(application, application.job)
+  const miles = commute_distance != null ? Number(commute_distance) : distance_miles
+  const commuteRisk = commute_risk_level || getCommuteRiskLevel(miles)
   const created = created_at ? new Date(created_at).toLocaleDateString('en-GB', {
     day: 'numeric',
     month: 'short',
@@ -15,12 +16,14 @@ export default function ApplicantQuickView({ application, onClose }) {
   }) : '—'
 
   const statusStyles = {
-    new: 'bg-slate-100 text-slate-700',
-    interviewing: 'bg-amber-100 text-amber-800',
-    offered: 'bg-emerald-100 text-emerald-800',
-    rejected: 'bg-red-100 text-red-700'
+    pending: 'bg-slate-100 text-slate-700 border border-slate-300',
+    new: 'bg-slate-100 text-slate-700 border border-slate-300',
+    shortlisted: 'bg-emerald-100 text-emerald-800 border border-emerald-300',
+    interviewing: 'bg-amber-100 text-amber-800 border border-amber-300',
+    offered: 'bg-emerald-100 text-emerald-800 border border-emerald-300',
+    rejected: 'bg-red-100 text-red-700 border border-red-300'
   }
-  const statusClass = statusStyles[status] ?? 'bg-slate-100 text-slate-700'
+  const statusClass = statusStyles[status] ?? 'bg-slate-100 text-slate-700 border border-slate-300'
 
   return (
     <>
@@ -46,15 +49,15 @@ export default function ApplicantQuickView({ application, onClose }) {
               {trust.label}
             </span>
           </div>
-          {(commuteRisk || distance_miles != null) && (
+          {(commuteRisk || miles != null) && (
             <div className="flex items-center justify-between gap-2">
               <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">Commute</p>
               <span className="flex items-center gap-1.5">
                 {commuteRisk === 'green' && <span title="Low risk">🟢</span>}
                 {commuteRisk === 'amber' && <span title="Medium risk">🟡</span>}
                 {commuteRisk === 'red' && <span title="High risk">🔴</span>}
-                {distance_miles != null && (
-                  <span className="text-slate-600 text-sm">{distance_miles} miles</span>
+                {miles != null && (
+                  <span className="text-slate-600 text-sm">{miles} miles</span>
                 )}
               </span>
             </div>
@@ -73,10 +76,10 @@ export default function ApplicantQuickView({ application, onClose }) {
             <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-1">Phone</p>
             <p className="text-slate-900 font-medium">{phone ?? '—'}</p>
           </div>
-          {postcode && (
+          {(candidate_postcode || postcode) && (
             <div>
               <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-1"><MapPin className="inline w-3.5 h-3.5 mr-1" /> Postcode</p>
-              <p className="text-slate-900 font-medium">{postcode}</p>
+              <p className="text-slate-900 font-medium">{candidate_postcode || postcode}</p>
             </div>
           )}
           {rtw_document_url && (
@@ -90,7 +93,7 @@ export default function ApplicantQuickView({ application, onClose }) {
           <div>
             <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-1">Status</p>
             <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium capitalize ${statusClass}`}>
-              {status ?? 'new'}
+              {status ?? 'pending'}
             </span>
           </div>
           {job?.title && (

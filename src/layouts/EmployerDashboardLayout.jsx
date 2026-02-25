@@ -1,8 +1,14 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom'
-import { Users, Briefcase, Settings } from 'lucide-react'
+import { Users, Briefcase, Settings, LogOut } from 'lucide-react'
+import { supabase } from '../supabase'
 
 export default function EmployerDashboardLayout() {
   const navigate = useNavigate()
+
+  async function handleLogOut() {
+    await supabase.auth.signOut()
+    navigate('/employer/login', { replace: true })
+  }
   const navItems = [
     { to: '/employer/dashboard', icon: Users, label: 'Applicants' },
     { to: '/employer/dashboard/jobs', icon: Briefcase, label: 'Jobs' },
@@ -39,16 +45,34 @@ export default function EmployerDashboardLayout() {
               {label}
             </NavLink>
           ))}
+          <div className="pt-4 mt-4 border-t border-slate-100">
+            <button
+              type="button"
+              onClick={handleLogOut}
+              className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition"
+            >
+              <LogOut size={18} strokeWidth={2} />
+              Log out
+            </button>
+          </div>
         </nav>
       </aside>
 
       <div className="lg:hidden">
-        <header className="sticky top-0 z-30 border-b border-slate-200 bg-white px-4 py-3">
+        <header className="sticky top-0 z-30 flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3">
           <button
             onClick={() => navigate('/')}
             className="text-slate-900 font-bold tracking-tight"
           >
             Hire<span className="text-[#f4601a]">Fast</span>
+          </button>
+          <button
+            type="button"
+            onClick={handleLogOut}
+            className="flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-100 transition"
+          >
+            <LogOut size={16} />
+            Log out
           </button>
         </header>
         <nav className="flex gap-1 border-b border-slate-200 bg-white px-2 py-2">

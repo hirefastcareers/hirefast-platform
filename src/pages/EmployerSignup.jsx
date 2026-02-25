@@ -25,25 +25,41 @@ function EmployerSignup() {
     setError(null)
 
     try {
-      // Create auth account
+      // Try to create auth account
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: form.email,
         password: form.password
       })
-      if (authError) throw authError
 
-      // Save employer profile
-      const { error: dbError } = await supabase
-        .from('employers')
-        .insert([{
-          id: authData.user.id,
-          email: form.email,
-          company_name: form.company_name,
-          location: form.location,
-          website: form.website,
-          company_description: form.company_description
-        }])
-      if (dbError) throw dbError
+      let session = authData?.session
+
+      // If "user already registered", sign in with same credentials and then ensure employer exists
+      if (authError) {
+        const msg = (authError.message || '').toLowerCase()
+        if (msg.includes('already registered') || msg.includes('already exists') || msg.includes('already been registered')) {
+          const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+            email: form.email,
+            password: form.password
+          })
+          if (signInError) throw new Error('This email is already registered. Sign in with your password, or use Forgot password.')
+          session = signInData?.session
+        } else {
+          throw authError
+        }
+      }
+
+      if (!session) throw new Error('Please confirm your email first, then sign in to complete setup.')
+
+      // Create employer (or get existing) via RPC
+      const { data: employerId, error: rpcError } = await supabase.rpc('create_employer_on_signup', {
+        p_company_name: form.company_name.trim(),
+        p_admin_email: form.email.trim(),
+        p_location: form.location?.trim() || null,
+        p_website: form.website?.trim() || null,
+        p_company_description: form.company_description?.trim() || null
+      })
+      if (rpcError) throw rpcError
+      if (!employerId) throw new Error('Employer was not created.')
 
       navigate('/employer/dashboard')
     } catch (err) {
@@ -81,7 +97,7 @@ function EmployerSignup() {
               onChange={handleChange}
               required
               placeholder="e.g. Primark, Amazon, Co-op"
-              className="w-full border border-[#d5e0ee] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#0d2547] transition"
+              className="w-full border border-[#d5e0ee] rounded-lg px-4 py-3 text-sm text-[#0d2547] placeholder:text-[#5a6e8a] focus:outline-none focus:border-[#0d2547] transition"
             />
           </div>
 
@@ -94,7 +110,7 @@ function EmployerSignup() {
               onChange={handleChange}
               required
               placeholder="you@company.com"
-              className="w-full border border-[#d5e0ee] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#0d2547] transition"
+              className="w-full border border-[#d5e0ee] rounded-lg px-4 py-3 text-sm text-[#0d2547] placeholder:text-[#5a6e8a] focus:outline-none focus:border-[#0d2547] transition"
             />
           </div>
 
@@ -107,7 +123,7 @@ function EmployerSignup() {
               onChange={handleChange}
               required
               placeholder="Minimum 6 characters"
-              className="w-full border border-[#d5e0ee] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#0d2547] transition"
+              className="w-full border border-[#d5e0ee] rounded-lg px-4 py-3 text-sm text-[#0d2547] placeholder:text-[#5a6e8a] focus:outline-none focus:border-[#0d2547] transition"
             />
           </div>
 
@@ -120,7 +136,7 @@ function EmployerSignup() {
               onChange={handleChange}
               required
               placeholder="e.g. Birmingham, Manchester, London"
-              className="w-full border border-[#d5e0ee] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#0d2547] transition"
+              className="w-full border border-[#d5e0ee] rounded-lg px-4 py-3 text-sm text-[#0d2547] placeholder:text-[#5a6e8a] focus:outline-none focus:border-[#0d2547] transition"
             />
           </div>
 
@@ -132,7 +148,7 @@ function EmployerSignup() {
               value={form.website}
               onChange={handleChange}
               placeholder="e.g. www.yourcompany.co.uk"
-              className="w-full border border-[#d5e0ee] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#0d2547] transition"
+              className="w-full border border-[#d5e0ee] rounded-lg px-4 py-3 text-sm text-[#0d2547] placeholder:text-[#5a6e8a] focus:outline-none focus:border-[#0d2547] transition"
             />
           </div>
 
@@ -144,7 +160,7 @@ function EmployerSignup() {
               onChange={handleChange}
               rows={3}
               placeholder="Tell candidates what it's like to work for you..."
-              className="w-full border border-[#d5e0ee] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#0d2547] transition resize-none"
+              className="w-full border border-[#d5e0ee] rounded-lg px-4 py-3 text-sm text-[#0d2547] placeholder:text-[#5a6e8a] focus:outline-none focus:border-[#0d2547] transition resize-none"
             />
           </div>
 

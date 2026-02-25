@@ -79,11 +79,11 @@ export async function getDistanceMilesFromApi(candidatePostcode, jobPostcode = D
 }
 
 /**
- * Commute risk level from distance in miles: green <=15, amber 15–30, red >30.
+ * Commute risk level from distance in miles: green <10, amber 10–20, red >20.
  */
 export function getCommuteRiskLevel(distanceMiles) {
   if (distanceMiles == null || typeof distanceMiles !== 'number') return null
-  if (distanceMiles <= 15) return 'green'
-  if (distanceMiles <= 30) return 'amber'
+  if (distanceMiles < 10) return 'green'
+  if (distanceMiles <= 20) return 'amber'
   return 'red'
 }

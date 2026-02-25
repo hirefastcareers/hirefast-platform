@@ -18,7 +18,12 @@ function EmployerLogin() {
       if (signInError) throw signInError
       navigate('/employer/dashboard')
     } catch (err) {
-      setError(err.message)
+      const msg = (err.message || '').toLowerCase()
+      if (msg.includes('invalid login') || msg.includes('invalid credentials')) {
+        setError('Email or password is incorrect. Check for typos, or use Forgot password below.')
+      } else {
+        setError(err.message)
+      }
     } finally {
       setLoading(false)
     }
@@ -49,18 +54,27 @@ function EmployerLogin() {
               onChange={(e) => setEmail(e.target.value)}
               required
               placeholder="you@company.com"
-              className="w-full border border-[#d5e0ee] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#0d2547] transition"
+              className="w-full border border-[#d5e0ee] rounded-lg px-4 py-3 text-sm text-[#0d2547] placeholder:text-[#5a6e8a] focus:outline-none focus:border-[#0d2547] transition"
             />
           </div>
           <div>
-            <label className="block text-sm font-bold text-[#0d2547] mb-1">Password</label>
+            <div className="flex items-center justify-between mb-1">
+              <label className="block text-sm font-bold text-[#0d2547]">Password</label>
+              <button
+                type="button"
+                onClick={() => navigate('/employer/forgot-password')}
+                className="text-sm text-[#0d2547] font-medium hover:underline"
+              >
+                Forgot password?
+              </button>
+            </div>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
               placeholder="Your password"
-              className="w-full border border-[#d5e0ee] rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-[#0d2547] transition"
+              className="w-full border border-[#d5e0ee] rounded-lg px-4 py-3 text-sm text-[#0d2547] placeholder:text-[#5a6e8a] focus:outline-none focus:border-[#0d2547] transition"
             />
           </div>
           <button

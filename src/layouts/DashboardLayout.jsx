@@ -1,86 +1,68 @@
-import { Outlet, NavLink, useNavigate } from 'react-router-dom'
-import { Users, Zap, BarChart3, Settings } from 'lucide-react'
+import { Outlet, useNavigate } from 'react-router-dom'
+import { LogOut } from 'lucide-react'
+import { EmployerProvider } from '../contexts/EmployerContext'
+import Sidebar from '../components/layout/Sidebar'
+import BottomNav from '../components/layout/BottomNav'
+import CompanySwitcher from '../components/layout/CompanySwitcher'
+import { supabase } from '../supabase'
 
+/**
+ * Responsive Recruiter Dashboard Layout (mobile-first).
+ * - lg and up: Sidebar (with Company Switcher) on the left.
+ * - Below lg: Header with company switcher + BottomNav (same nav items: Jobs, Candidates, Analytics).
+ */
 function DashboardLayout() {
   const navigate = useNavigate()
 
-  const navItems = [
-    { to: '/dashboard', icon: Users, label: 'Leads' },
-    { to: '/dashboard/recruiter', icon: Zap, label: 'Rapid Post' },
-    { to: '/dashboard/analytics', icon: BarChart3, label: 'Analytics' },
-    { to: '/dashboard/settings', icon: Settings, label: 'Settings' }
-  ]
+  async function handleLogOut() {
+    await supabase.auth.signOut()
+    navigate('/employer/login', { replace: true })
+  }
 
   return (
-    <div className="min-h-screen bg-[#000000]">
-      {/* Sidebar — Apple Glass */}
-      <aside className="fixed left-0 top-0 z-40 h-full w-64 border-t border-white/10 bg-[#1c1c1e]/60 backdrop-blur-xl lg:flex flex-col hidden">
-        <div className="p-6 border-b border-white/10">
-          <button
-            onClick={() => navigate('/')}
-            className="text-white font-bold text-xl tracking-tighter hover:opacity-90 transition-all duration-500"
-          >
-            Hire<span className="text-[#30d158]">Fast</span>
-          </button>
-          <p className="text-xs text-[#a1a1a6] mt-1 font-medium">Recruiter Command Centre</p>
+    <EmployerProvider>
+      <div className="min-h-screen bg-slate-100/80">
+        {/* Desktop: Sidebar (recruiter) */}
+        <div className="hidden lg:block">
+          <Sidebar />
         </div>
-        <nav className="flex-1 p-4 space-y-1">
-          {navItems.map(({ to, icon: Icon, label }) => (
-            <NavLink
-              key={to}
-              to={to}
-              end={to === '/dashboard'}
-              className={({ isActive }) =>
-                `flex items-center gap-3 rounded-full px-4 py-3 text-sm font-semibold transition-all duration-500 ${
-                  isActive
-                    ? 'bg-[#0a84ff] text-white'
-                    : 'text-[#a1a1a6] hover:bg-white/10 hover:text-white'
-                }`
-              }
-            >
-              <Icon size={20} strokeWidth={2} />
-              {label}
-            </NavLink>
-          ))}
-        </nav>
-      </aside>
 
-      {/* Mobile: top bar + nav tabs */}
-      <div className="lg:hidden">
-        <header className="sticky top-0 z-30 flex items-center gap-4 border-b border-white/10 bg-[#1c1c1e]/60 backdrop-blur-xl px-4 py-3">
-          <button
-            onClick={() => navigate('/')}
-            className="text-white font-bold text-lg tracking-tighter"
-          >
-            Hire<span className="text-[#30d158]">Fast</span>
-          </button>
-          <span className="text-xs text-[#a1a1a6] font-medium">Command Centre</span>
-        </header>
-        <nav className="flex gap-1 border-b border-white/10 bg-[#1c1c1e]/40 backdrop-blur-xl px-2 py-2">
-          {navItems.map(({ to, icon: Icon, label }) => (
-            <NavLink
-              key={to}
-              to={to}
-              end={to === '/dashboard'}
-              className={({ isActive }) =>
-                `flex items-center gap-2 rounded-full px-3 py-2 text-xs font-semibold transition-all duration-500 ${
-                  isActive ? 'bg-[#0a84ff] text-white' : 'text-[#a1a1a6] hover:bg-white/10 hover:text-white'
-                }`
-              }
-            >
-              <Icon size={16} />
-              {label}
-            </NavLink>
-          ))}
-        </nav>
+        {/* Mobile: Header + Bottom nav (recruiter, same context) */}
+        <div className="lg:hidden">
+          <header className="sticky top-0 z-30 flex flex-col gap-3 border-b border-slate-200/80 bg-white/95 backdrop-blur-xl px-4 py-3">
+            <div className="flex items-center justify-between gap-4">
+              <button
+                type="button"
+                onClick={() => navigate('/')}
+                className="text-[#0d2547] font-black text-lg tracking-tight"
+              >
+                Hire<span className="text-[#f4601a]">Fast</span>
+              </button>
+              <span className="text-xs text-slate-500 font-medium">
+                Command Centre
+              </span>
+              <button
+                type="button"
+                onClick={handleLogOut}
+                className="flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 transition"
+              >
+                <LogOut size={16} />
+                Log out
+              </button>
+            </div>
+            <CompanySwitcher />
+          </header>
+          <BottomNav variant="recruiter" />
+        </div>
+
+        {/* Main content: offset by sidebar on desktop, by bottom nav on mobile */}
+        <main className="min-h-screen pb-20 lg:pl-64 lg:pb-0">
+          <div className="p-4 sm:p-6">
+            <Outlet />
+          </div>
+        </main>
       </div>
-
-      <main className="lg:pl-64 min-h-screen">
-        <div className="p-0">
-          <Outlet />
-        </div>
-      </main>
-    </div>
+    </EmployerProvider>
   )
 }
 

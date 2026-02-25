@@ -1,9 +1,25 @@
 import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import { Briefcase, Building2, ArrowRight } from 'lucide-react'
 import Navbar from '../components/Navbar'
 
 function Home() {
   const navigate = useNavigate()
+  const [scrollProgress, setScrollProgress] = useState(0)
+
+  useEffect(() => {
+    function updateScroll() {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight
+      if (maxScroll <= 0) {
+        setScrollProgress(0)
+        return
+      }
+      setScrollProgress(window.scrollY / maxScroll)
+    }
+    updateScroll()
+    window.addEventListener('scroll', updateScroll, { passive: true })
+    return () => window.removeEventListener('scroll', updateScroll)
+  }, [])
 
   return (
     <div className="min-h-screen bg-slate-950 text-white antialiased">
@@ -17,9 +33,20 @@ function Home() {
       <Navbar />
 
       <main className="relative max-w-6xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-20">
-        {/* Hero */}
+        {/* Hero — masked text: gradient moves behind headline as you scroll */}
         <section className="text-center mb-12 sm:mb-16">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.1]">
+          <h1
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight max-w-4xl mx-auto leading-[1.1] select-none"
+            style={{
+              backgroundImage: 'linear-gradient(to bottom, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.92) 20%, rgba(165,180,252,0.88) 40%, rgba(251,191,36,0.82) 60%, rgba(255,255,255,0.92) 80%, rgba(255,255,255,0.98) 100%)',
+              backgroundSize: '100% 400%',
+              backgroundPosition: `center ${scrollProgress * 100}%`,
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+              color: 'transparent',
+              transition: 'background-position 0.12s ease-out',
+            }}
+          >
             The 15-Second Application Flow for High-Volume UK Teams.
           </h1>
           <p className="mt-4 sm:mt-6 text-slate-400 text-base sm:text-lg max-w-2xl mx-auto">

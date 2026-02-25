@@ -258,10 +258,10 @@ function EligibilityModal({ job, isOpen, onClose, onEligible }) {
 }
 
 export default function JobBoard() {
+  const navigate = useNavigate()
   const [jobs, setJobs] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [eligibilityJob, setEligibilityJob] = useState(null)
 
   useEffect(() => {
     async function fetchJobs() {
@@ -320,7 +320,8 @@ export default function JobBoard() {
         {jobs.map((job) => (
           <article
             key={job.id}
-            className="group relative rounded-2xl sm:rounded-3xl border border-white/10 bg-slate-800/50 backdrop-blur-sm overflow-hidden hover:border-amber-500/30 hover:bg-slate-800/70 transition-all duration-200"
+            onClick={() => navigate(`/jobs/${job.id}`)}
+            className="group relative rounded-2xl sm:rounded-3xl border border-white/10 bg-slate-800/50 backdrop-blur-sm overflow-hidden hover:border-amber-500/30 hover:bg-slate-800/70 transition-all duration-200 cursor-pointer"
           >
             <div className="absolute top-3 right-3">
               <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/20 border border-amber-400/40 px-2.5 py-1 text-xs font-bold text-amber-400 uppercase tracking-wide">
@@ -338,26 +339,16 @@ export default function JobBoard() {
                 </p>
               )}
               <div className="mt-auto pt-5">
-                <button
-                  type="button"
-                  onClick={() => setEligibilityJob(job)}
-                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-amber-500 text-slate-900 font-bold py-3.5 sm:py-4 text-sm sm:text-base hover:bg-amber-400 transition shadow-lg shadow-amber-500/20"
-                >
-                  Check Eligibility
+                <span className="w-full flex items-center justify-center gap-2 rounded-xl bg-amber-500 text-slate-900 font-bold py-3.5 sm:py-4 text-sm sm:text-base group-hover:bg-amber-400 transition shadow-lg shadow-amber-500/20">
+                  View & Apply
                   <ChevronRight className="w-5 h-5" />
-                </button>
+                </span>
               </div>
             </div>
           </article>
         ))}
       </div>
 
-      <EligibilityModal
-        job={eligibilityJob}
-        isOpen={!!eligibilityJob}
-        onClose={() => setEligibilityJob(null)}
-        onEligible={() => setEligibilityJob(null)}
-      />
     </>
   )
 }

@@ -17,9 +17,19 @@
 5. **The Truth Engine:** Prioritize verified data (Postcode-to-job distance, "Right to Work" status) over subjective candidate bios.
 
 ## Feature Implementation Standards
-- **Rapid-Post:** Use pre-built sector templates (Logistics, Retail, Hospitality, Care).
-- **Match Scoring:** Every application needs a Suitability Score (%) based on commute, experience, and eligibility.
+- **Rapid-Post:** Use pre-built sector templates (Logistics, Engineering, Manufacturing, Retail).
+- **Match Scoring:** Suitability Score (%) from commute (Truth Engine), RTW, and for Engineering/Manufacturing 50% Location + 50% Skills Match when job has required_skills. Flag "Missing Requirements" when candidate lacks required tickets.
 - **Anti-Ghosting:** Include "Interest Check" magic link flows for candidates and "Ghosting Flags" for recruiters.
 
 ## Tone & Personality
 Expert collaborator. Be direct. If a feature adds friction to the candidate journey, challenge it. Suggest "Speed-First" optimizations for high-volume scaling.
+
+## Design System & UI Logic
+1. **Aesthetic:** "Clean Enterprise." High contrast, lots of whitespace, rounded corners (12px/xl).
+2. **Components:** Use Shadcn/UI primitives. Buttons must be `size="lg"` for mobile-first actions.
+3. **The "Truth Engine" UI:** Use Badge components for scores. 
+   - 🟢 High Match (>80%) / Short Commute
+   - 🟡 Medium Match (50-79%) / Potential Travel Issues
+   - 🔴 Low Match (<50%) / No RTW / Impossible Commute
+4. **Loading States:** Use Skeleton loaders for all async Supabase fetches to maintain the "High-Velocity" feel.
+5. **No Modals on Mobile:** For the "Express Apply" flow, use Drawer components (sliding up from the bottom) instead of centered modals to keep it "Thumb-Friendly."

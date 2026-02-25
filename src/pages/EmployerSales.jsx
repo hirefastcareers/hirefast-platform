@@ -137,7 +137,7 @@ export default function EmployerSales() {
     {
       icon: MapPin,
       title: 'Local First',
-      description: 'Postcode-aware sorting built for UK logistics and retail. See the right candidates first.',
+      description: 'Postcode-aware sorting built for Logistics, Manufacturing, Engineering and Retail. See the right candidates first.',
       accent: 'blue',
     },
     {
@@ -163,10 +163,10 @@ export default function EmployerSales() {
         {/* Hero */}
         <section className="text-center mb-16 sm:mb-24">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-[1.1]">
-            High-Volume Hiring at <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">5G Speed.</span>
+            High-Volume Industrial Hiring at <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">5G Speed.</span>
           </h1>
           <p className="mt-4 sm:mt-6 text-slate-400 text-base sm:text-lg max-w-2xl mx-auto">
-            Stop losing great candidates to slow applications. Built for UK employers who need to fill roles fast.
+            Keeping the supply chain and shop floors moving at 5G speed. Built for UK employers in Logistics, Manufacturing, Engineering and Retail.
           </p>
         </section>
 
@@ -176,6 +176,16 @@ export default function EmployerSales() {
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-3">The Drop-off Crisis</h2>
             <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl">
               <span className="text-red-400 font-semibold">60% of UK candidates</span> abandon applications if they take longer than 3 minutes. Every extra field and click costs you hires. We built HireFast so applicants get from &ldquo;interested&rdquo; to &ldquo;applied&rdquo; in seconds—not minutes.
+            </p>
+          </div>
+        </section>
+
+        {/* Sector-Specific */}
+        <section className="mb-16 sm:mb-24">
+          <div className="rounded-2xl sm:rounded-3xl border border-white/10 bg-slate-800/30 p-6 sm:p-8 text-center">
+            <p className="text-slate-400 text-sm font-medium uppercase tracking-wider mb-2">Sector-Specific</p>
+            <p className="text-xl sm:text-2xl font-bold text-white">
+              Logistics <span className="text-slate-500 mx-2">•</span> Manufacturing <span className="text-slate-500 mx-2">•</span> Engineering <span className="text-slate-500 mx-2">•</span> Retail
             </p>
           </div>
         </section>
