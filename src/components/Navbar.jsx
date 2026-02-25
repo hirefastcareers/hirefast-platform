@@ -8,9 +8,10 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-14 sm:h-16">
         <button
           onClick={() => navigate('/')}
-          className="text-slate-900 font-bold text-lg sm:text-xl tracking-tight hover:text-slate-700 transition"
+          className="font-bold text-lg sm:text-xl tracking-tight transition"
         >
-          Hire<span className="text-blue-600">Fast</span>
+          <span className="text-slate-900 hover:text-slate-700">Hire</span>
+          <span className="text-blue-600 hover:text-blue-700">Fast</span>
         </button>
         <nav className="flex items-center gap-1 sm:gap-2">
           <button

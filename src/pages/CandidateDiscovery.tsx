@@ -5,6 +5,7 @@ import { supabase } from '../supabase'
 import { TICKET_OPTIONS } from '../constants/skills'
 import { Badge, RTWBadge, CommuteBadge } from '../components/ui/badge'
 import CandidateQuickViewPanel from '../components/discovery/CandidateQuickViewPanel'
+import DiscoveryListSkeleton from '../components/discovery/DiscoveryListSkeleton'
 
 const SECTORS = [
   { id: '', label: 'All sectors' },
@@ -193,7 +194,7 @@ export default function CandidateDiscovery() {
   if (contextLoading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[40vh] gap-4">
-        <Loader2 className="w-10 h-10 animate-spin text-[#0d2547]" />
+        <Loader2 className="w-10 h-10 animate-spin text-slate-900" />
         <p className="text-slate-600 font-medium">Loading…</p>
       </div>
     )
@@ -227,7 +228,7 @@ export default function CandidateDiscovery() {
           value={selectedJobId ?? ''}
           onChange={(e) => setSelectedJobId(e.target.value || null)}
           disabled={jobsLoading}
-          className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#f4601a]/30 focus:border-[#f4601a] disabled:opacity-60"
+          className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 disabled:opacity-60"
         >
           <option value="">All roles</option>
           {jobs.map((job) => (
@@ -258,7 +259,7 @@ export default function CandidateDiscovery() {
             placeholder="Search by name or email…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-xl border border-slate-200 bg-white pl-10 pr-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#f4601a]/30 focus:border-[#f4601a]"
+            className="w-full rounded-xl border border-slate-200 bg-white pl-10 pr-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500"
           />
         </div>
         <button
@@ -266,7 +267,7 @@ export default function CandidateDiscovery() {
           onClick={() => setShowFilters((v) => !v)}
           className={`inline-flex items-center justify-center gap-2 rounded-xl border px-4 py-3 font-semibold transition ${
             showFilters
-              ? 'border-[#0d2547] bg-[#0d2547] text-white'
+              ? 'border-slate-900 bg-slate-900 text-white'
               : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
           }`}
         >
@@ -283,7 +284,7 @@ export default function CandidateDiscovery() {
               <select
                 value={radiusMiles}
                 onChange={(e) => setRadiusMiles(Number(e.target.value))}
-                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#f4601a]/30"
+                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
               >
                 {RADIUS_OPTIONS.map(({ value, label }) => (
                   <option key={value} value={value}>
@@ -297,7 +298,7 @@ export default function CandidateDiscovery() {
               <select
                 value={sector}
                 onChange={(e) => setSector(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#f4601a]/30"
+                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
               >
                 {SECTORS.map(({ id, label }) => (
                   <option key={id || 'all'} value={id}>
@@ -317,7 +318,7 @@ export default function CandidateDiscovery() {
                   onClick={() => toggleSkill(ticket)}
                   className={`rounded-xl border px-3 py-2 text-sm font-medium transition ${
                     skillsFilter.includes(ticket)
-                      ? 'border-[#0d2547] bg-[#0d2547] text-white'
+                      ? 'border-slate-900 bg-slate-900 text-white'
                       : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-100'
                   }`}
                 >
@@ -336,10 +337,7 @@ export default function CandidateDiscovery() {
       )}
 
       {loading ? (
-        <div className="flex flex-col items-center justify-center py-16 gap-3">
-          <Loader2 className="w-8 h-8 animate-spin text-[#0d2547]" />
-          <span className="text-slate-500 text-sm">Loading candidates…</span>
-        </div>
+        <DiscoveryListSkeleton />
       ) : filtered.length === 0 ? (
         <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center">
           <p className="text-slate-600 font-medium">No candidates match your filters.</p>
@@ -390,7 +388,7 @@ export default function CandidateDiscovery() {
                       <button
                         type="button"
                         onClick={() => setQuickViewApp(app)}
-                        className="inline-flex items-center gap-2 rounded-xl bg-[#0d2547] text-white font-semibold px-4 py-3 hover:bg-[#0d2547]/90 transition"
+                        className="inline-flex items-center gap-2 rounded-xl bg-blue-600 text-white font-semibold px-4 py-3 hover:bg-blue-700 transition"
                       >
                         <Eye className="w-4 h-4" />
                         Quick View

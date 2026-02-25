@@ -2,11 +2,11 @@ import { forwardRef, type ButtonHTMLAttributes } from 'react'
 
 const buttonVariants = {
   default:
-    'bg-[#0d2547] text-white shadow-lg shadow-[#0d2547]/20 hover:bg-[#0d2547]/90 active:scale-[0.98]',
+    'bg-blue-600 text-white shadow-lg shadow-blue-500/20 hover:bg-blue-700 active:scale-[0.98]',
   outline:
     'border border-slate-200 bg-white/80 text-slate-700 hover:bg-slate-50 hover:border-slate-300',
   ghost: 'text-slate-600 hover:bg-slate-100 hover:text-slate-900',
-  link: 'text-[#0d2547] underline-offset-4 hover:underline',
+  link: 'text-blue-600 underline-offset-4 hover:underline',
 }
 
 const sizeVariants = {
@@ -27,7 +27,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         ref={ref}
-        className={`inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#f4601a]/20 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${buttonVariants[variant]} ${sizeVariants[size]} ${className}`}
+        className={`inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${buttonVariants[variant]} ${sizeVariants[size]} ${className}`}
         {...props}
       />
     )

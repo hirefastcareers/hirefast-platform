@@ -183,7 +183,7 @@ export default function CandidateProfile() {
           {editLink && (
             <p className="text-slate-500 text-sm">
               Save this link to edit your profile later:{' '}
-              <a href={editLink} className="text-[#0d2547] font-medium underline break-all">
+              <a href={editLink} className="text-blue-600 font-medium underline break-all">
                 {editLink}
               </a>
             </p>
@@ -220,13 +220,13 @@ export default function CandidateProfile() {
                 onChange={(e) => setPasteText(e.target.value)}
                 placeholder="Paste at least 50 characters from your CV…"
                 rows={4}
-                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#f4601a]/30 focus:border-[#f4601a] resize-y"
+                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 resize-y"
               />
               <button
                 type="button"
                 onClick={handlePasteParse}
                 disabled={pasteText.trim().length < 50}
-                className="mt-2 w-full rounded-xl bg-[#0d2547] text-white font-semibold py-3 disabled:opacity-50"
+                className="mt-2 w-full rounded-xl bg-slate-900 text-white font-semibold py-3 disabled:opacity-50"
               >
                 Parse with AI
               </button>
@@ -258,7 +258,7 @@ export default function CandidateProfile() {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="e.g. Alex Smith"
-                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#f4601a]/30"
+                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
               />
             </div>
             <div>
@@ -268,7 +268,7 @@ export default function CandidateProfile() {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="e.g. 07123 456789"
-                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#f4601a]/30"
+                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
               />
             </div>
             <div>
@@ -279,7 +279,7 @@ export default function CandidateProfile() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="e.g. alex@example.com"
                 required
-                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#f4601a]/30"
+                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
               />
             </div>
             <div>
@@ -289,7 +289,7 @@ export default function CandidateProfile() {
                 value={postcode}
                 onChange={(e) => setPostcode(e.target.value)}
                 placeholder="e.g. M1 1AD (for distance matching)"
-                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#f4601a]/30"
+                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
               />
             </div>
             {speedSummary && (
@@ -311,7 +311,7 @@ export default function CandidateProfile() {
                     onClick={() => toggleSkill(skill)}
                     className={`rounded-xl border px-3 py-2 text-sm font-medium transition ${
                       skills.includes(skill)
-                        ? 'border-[#0d2547] bg-[#0d2547] text-white'
+                        ? 'border-slate-900 bg-slate-900 text-white'
                         : 'border-slate-200 bg-white text-slate-600'
                     }`}
                   >
@@ -355,7 +355,7 @@ export default function CandidateProfile() {
               type="button"
               onClick={handleSave}
               disabled={saving || !email.trim()}
-              className="w-full rounded-xl bg-[#f4601a] text-white font-bold py-4 text-lg disabled:opacity-50 flex items-center justify-center gap-2"
+              className="w-full rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 text-lg disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {saving ? <Loader2 className="w-6 h-6 animate-spin" /> : null}
               {saving ? 'Saving…' : 'Save profile'}

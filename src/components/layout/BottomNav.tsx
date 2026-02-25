@@ -49,7 +49,7 @@ export default function BottomNav({
           className={({ isActive }) =>
             `flex min-h-[3.25rem] flex-1 flex-col items-center justify-center gap-1 py-2 text-xs font-semibold transition active:scale-95 ${
               isActive
-                ? 'text-[#0d2547]'
+                ? 'text-blue-600'
                 : 'text-slate-500 hover:text-slate-700'
             }`
           }

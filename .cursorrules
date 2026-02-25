@@ -25,11 +25,12 @@
 Expert collaborator. Be direct. If a feature adds friction to the candidate journey, challenge it. Suggest "Speed-First" optimizations for high-volume scaling.
 
 ## Design System & UI Logic
-1. **Aesthetic:** "Clean Enterprise." High contrast, lots of whitespace, rounded corners (12px/xl).
-2. **Components:** Use Shadcn/UI primitives. Buttons must be `size="lg"` for mobile-first actions.
-3. **The "Truth Engine" UI:** Use Badge components for scores. 
+1. **Brand colours (three only):** **Blue** = logo “Fast”, primary CTAs, links, focus rings (`blue-600` / #2563eb, hover `blue-700`). **Black** = logo “Hire”, headings, dark surfaces (`slate-900`). **White** = backgrounds, cards (`white`, `slate-50`). Use only blue, black and white across the site.
+2. **Aesthetic:** "Clean Enterprise." High contrast, lots of whitespace, rounded corners (12px/xl).
+3. **Components:** Use Shadcn/UI primitives. Buttons must be `size="lg"` for mobile-first actions.
+4. **The "Truth Engine" UI:** Use Badge components for scores. 
    - 🟢 High Match (>80%) / Short Commute
    - 🟡 Medium Match (50-79%) / Potential Travel Issues
    - 🔴 Low Match (<50%) / No RTW / Impossible Commute
-4. **Loading States:** Use Skeleton loaders for all async Supabase fetches to maintain the "High-Velocity" feel.
-5. **No Modals on Mobile:** For the "Express Apply" flow, use Drawer components (sliding up from the bottom) instead of centered modals to keep it "Thumb-Friendly."
+5. **Loading States:** Use Skeleton loaders for all async Supabase fetches to maintain the "High-Velocity" feel.
+6. **No Modals on Mobile:** For the "Express Apply" flow, use Drawer components (sliding up from the bottom) instead of centered modals to keep it "Thumb-Friendly."

@@ -20,7 +20,7 @@ export default function CompanySwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        className={`flex w-full items-center justify-between gap-2 rounded-xl border border-slate-200 bg-white/80 px-3 py-2.5 text-left text-sm font-medium text-[#0d2547] transition hover:bg-white hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#f4601a]/20 focus:ring-offset-2`}
+        className={`flex w-full items-center justify-between gap-2 rounded-xl border border-slate-200 bg-white/80 px-3 py-2.5 text-left text-sm font-medium text-slate-900 transition hover:bg-white hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:ring-offset-2`}
       >
         <span className="flex items-center gap-2 truncate">
           <Building2 className="h-4 w-4 shrink-0 text-slate-500" />

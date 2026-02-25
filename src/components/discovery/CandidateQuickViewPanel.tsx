@@ -216,9 +216,10 @@ export default function CandidateQuickViewPanel({
         })
         .eq('id', applicationId)
       if (error) throw error
-      const baseUrl = typeof window !== 'undefined' ? window.location.origin : ''
-      const magicLinkUrl = `${baseUrl}/confirm-interest/${applicationId}?t=${token}`
-      console.log('[Interest Check] Magic link (send via Resend/SMS):', magicLinkUrl)
+      const { data } = await supabase.functions.invoke('send-interest-check', {
+        body: { application_id: applicationId },
+      })
+      if (!data?.sent && data?.magic_link) console.log('[Interest Check] Magic link:', data.magic_link)
       onInterestCheckSent?.(applicationId)
     } finally {
       setSendingInterestCheck(false)
@@ -285,7 +286,7 @@ export default function CandidateQuickViewPanel({
                 href={displayCvUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-[#0d2547] hover:bg-slate-100"
+                className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-blue-600 hover:bg-slate-100"
               >
                 View full CV <ExternalLink className="w-4 h-4" />
               </a>
@@ -325,7 +326,7 @@ export default function CandidateQuickViewPanel({
                         href={requestCvLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-[#0d2547] font-medium hover:bg-slate-50 break-all"
+                        className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-blue-600 font-medium hover:bg-slate-50 break-all"
                       >
                         <Link2 className="w-4 h-4 shrink-0" />
                         {requestCvLink}
@@ -333,7 +334,7 @@ export default function CandidateQuickViewPanel({
                       <button
                         type="button"
                         onClick={copyRequestCvLink}
-                        className="inline-flex items-center gap-2 rounded-xl bg-[#0d2547] text-white font-semibold px-4 py-2.5 text-sm hover:bg-[#0d2547]/90"
+                        className="inline-flex items-center gap-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 text-sm hover:bg-slate-900 hover:bg-slate-800/90"
                       >
                         <Copy className="w-4 h-4" />
                         {linkCopied ? 'Copied' : 'Copy link'}
@@ -345,7 +346,7 @@ export default function CandidateQuickViewPanel({
                     type="button"
                     onClick={handleRequestCv}
                     disabled={requestCvLoading}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-[#0d2547] bg-white text-[#0d2547] font-bold px-4 py-3 hover:bg-slate-50 disabled:opacity-60"
+                    className="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-slate-900 bg-white text-slate-900 font-bold px-4 py-3 hover:bg-slate-50 disabled:opacity-60"
                   >
                     {requestCvLoading ? (
                       <Loader2 className="w-5 h-5 animate-spin" />
@@ -367,7 +368,7 @@ export default function CandidateQuickViewPanel({
             <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-1">Email</p>
             <a
               href={`mailto:${email}`}
-              className="inline-flex items-center gap-1.5 text-[#0d2547] font-medium hover:underline"
+              className="inline-flex items-center gap-1.5 text-blue-600 font-medium hover:underline"
             >
               <Mail className="w-4 h-4" />
               {email ?? '—'}

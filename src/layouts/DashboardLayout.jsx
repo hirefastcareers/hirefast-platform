@@ -34,9 +34,9 @@ function DashboardLayout() {
               <button
                 type="button"
                 onClick={() => navigate('/')}
-                className="text-[#0d2547] font-black text-lg tracking-tight"
+                className="font-black text-lg tracking-tight"
               >
-                Hire<span className="text-[#f4601a]">Fast</span>
+                <span className="text-slate-900">Hire</span><span className="text-blue-600">Fast</span>
               </button>
               <span className="text-xs text-slate-500 font-medium">
                 Command Centre

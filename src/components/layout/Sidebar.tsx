@@ -26,9 +26,9 @@ export default function Sidebar() {
         <button
           type="button"
           onClick={() => navigate('/')}
-          className="text-[#0d2547] font-black text-xl tracking-tight hover:opacity-90 transition"
+          className="font-black text-xl tracking-tight hover:opacity-90 transition"
         >
-          Hire<span className="text-[#f4601a]">Fast</span>
+          <span className="text-slate-900">Hire</span><span className="text-blue-600">Fast</span>
         </button>
         <p className="text-xs text-slate-500 mt-1 font-medium">
           Recruiter Command Centre
@@ -48,8 +48,8 @@ export default function Sidebar() {
             className={({ isActive }) =>
               `flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition ${
                 isActive
-                  ? 'bg-[#0d2547] text-white shadow-lg shadow-[#0d2547]/20'
-                  : 'text-slate-600 hover:bg-slate-100 hover:text-[#0d2547]'
+                  ? 'bg-slate-900 text-white shadow-lg shadow-slate-900/20'
+                  : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
               }`
             }
           >
@@ -61,7 +61,7 @@ export default function Sidebar() {
           <button
             type="button"
             onClick={handleLogOut}
-            className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-100 hover:text-[#0d2547] transition"
+            className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition"
           >
             <LogOut size={20} strokeWidth={2} />
             Log out

@@ -171,7 +171,7 @@ function CandidateRegistration({ isOpen, onClose }) {
               <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-5 shadow-lg shadow-green-500/30">
                 <CheckCircle2 className="text-white" size={40} strokeWidth={2.5} />
               </div>
-              <h2 className="text-2xl sm:text-3xl font-black text-[#0d2547] mb-2 tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mb-2 tracking-tight">
                 You're on the list!
               </h2>
               <p className="text-slate-600 text-base font-medium">
@@ -183,11 +183,11 @@ function CandidateRegistration({ isOpen, onClose }) {
               <ul className="space-y-4">
                 {timelineSteps.map(({ icon: Icon, label, sub }, i) => (
                   <li key={i} className="flex items-start gap-4">
-                    <span className="flex-shrink-0 w-10 h-10 rounded-xl bg-[#0d2547]/10 flex items-center justify-center text-[#0d2547]">
+                    <span className="flex-shrink-0 w-10 h-10 rounded-xl bg-slate-900/10 flex items-center justify-center text-slate-900">
                       <Icon size={20} strokeWidth={2} />
                     </span>
                     <div>
-                      <p className="font-bold text-[#0d2547]">{label}</p>
+                      <p className="font-bold text-slate-900">{label}</p>
                       <p className="text-sm text-slate-500">{sub}</p>
                     </div>
                   </li>
@@ -198,7 +198,7 @@ function CandidateRegistration({ isOpen, onClose }) {
         ) : (
           // Registration Form
           <div className="p-6 sm:p-8">
-            <h2 className="text-2xl font-black text-[#0d2547] mb-2">
+            <h2 className="text-2xl font-black text-slate-900 mb-2">
               Join HireFast
             </h2>
             <p className="text-slate-600 mb-6">
@@ -208,7 +208,7 @@ function CandidateRegistration({ isOpen, onClose }) {
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Full Name */}
               <div>
-                <label className="block text-sm font-semibold text-[#0d2547] mb-2">
+                <label className="block text-sm font-semibold text-slate-900 mb-2">
                   Full Name *
                 </label>
                 <input
@@ -217,7 +217,7 @@ function CandidateRegistration({ isOpen, onClose }) {
                   value={formData.fullName}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0d2547] transition ${
+                  className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
                     errors.fullName ? 'border-red-300' : 'border-slate-200'
                   }`}
                   placeholder="John Smith"
@@ -229,7 +229,7 @@ function CandidateRegistration({ isOpen, onClose }) {
 
               {/* Email */}
               <div>
-                <label className="block text-sm font-semibold text-[#0d2547] mb-2">
+                <label className="block text-sm font-semibold text-slate-900 mb-2">
                   Email *
                 </label>
                 <input
@@ -238,7 +238,7 @@ function CandidateRegistration({ isOpen, onClose }) {
                   value={formData.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0d2547] transition ${
+                  className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
                     errors.email ? 'border-red-300' : 'border-slate-200'
                   }`}
                   placeholder="john@example.com"
@@ -250,7 +250,7 @@ function CandidateRegistration({ isOpen, onClose }) {
 
               {/* Primary Skill */}
               <div>
-                <label className="block text-sm font-semibold text-[#0d2547] mb-2">
+                <label className="block text-sm font-semibold text-slate-900 mb-2">
                   Primary Skill *
                 </label>
                 <select
@@ -258,7 +258,7 @@ function CandidateRegistration({ isOpen, onClose }) {
                   value={formData.primarySkill}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0d2547] transition bg-white ${
+                  className={`w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition bg-white ${
                     errors.primarySkill ? 'border-red-300' : 'border-slate-200'
                   }`}
                 >
@@ -285,7 +285,7 @@ function CandidateRegistration({ isOpen, onClose }) {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-[#0d2547] text-white py-4 rounded-full font-bold text-base hover:opacity-90 transition shadow-lg shadow-[#0d2547]/50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full bg-blue-600 text-white hover:bg-blue-700 py-4 rounded-full font-bold text-base hover:opacity-90 transition shadow-lg shadow-blue-500/30 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {loading ? (
                   <>

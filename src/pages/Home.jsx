@@ -1,112 +1,118 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import { Briefcase, Building2, ArrowRight } from 'lucide-react'
-import Navbar from '../components/Navbar'
+import { supabase } from '../supabase'
 
-function Home() {
+export default function Home() {
   const navigate = useNavigate()
-  const [scrollProgress, setScrollProgress] = useState(0)
+  const [email, setEmail] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const [success, setSuccess] = useState(false)
 
-  useEffect(() => {
-    function updateScroll() {
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight
-      if (maxScroll <= 0) {
-        setScrollProgress(0)
-        return
-      }
-      setScrollProgress(window.scrollY / maxScroll)
+  async function handleWaitlistSubmit(e) {
+    e.preventDefault()
+    const trimmed = email.trim()
+    if (!trimmed) return
+    setLoading(true)
+    setError(null)
+    setSuccess(false)
+    try {
+      const { data, error: rpcError } = await supabase.rpc('join_waitlist', {
+        p_email: trimmed,
+      })
+      if (rpcError) throw rpcError
+      setSuccess(true)
+      setEmail('')
+    } catch (err) {
+      const msg = err?.message ?? 'Something went wrong'
+      setError(msg.includes('Invalid email') ? 'Please enter a valid email address.' : 'Could not join the list. Try again.')
+    } finally {
+      setLoading(false)
     }
-    updateScroll()
-    window.addEventListener('scroll', updateScroll, { passive: true })
-    return () => window.removeEventListener('scroll', updateScroll)
-  }, [])
+  }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white antialiased">
-      {/* Subtle mesh gradient background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-indigo-500/15 rounded-full blur-[120px]" />
-        <div className="absolute top-1/2 -left-40 w-[400px] h-[400px] bg-amber-500/10 rounded-full blur-[100px]" />
-        <div className="absolute bottom-0 right-1/3 w-[300px] h-[300px] bg-slate-700/20 rounded-full blur-[80px]" />
-      </div>
-
-      <Navbar />
-
-      <main className="relative max-w-6xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-20">
-        {/* Hero — masked text: gradient moves behind headline as you scroll */}
-        <section className="text-center mb-12 sm:mb-16">
-          <h1
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight max-w-4xl mx-auto leading-[1.1] select-none"
-            style={{
-              backgroundImage: 'linear-gradient(to bottom, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.92) 20%, rgba(165,180,252,0.88) 40%, rgba(251,191,36,0.82) 60%, rgba(255,255,255,0.92) 80%, rgba(255,255,255,0.98) 100%)',
-              backgroundSize: '100% 400%',
-              backgroundPosition: `center ${scrollProgress * 100}%`,
-              WebkitBackgroundClip: 'text',
-              backgroundClip: 'text',
-              color: 'transparent',
-              transition: 'background-position 0.12s ease-out',
-            }}
+    <div className="min-h-screen bg-slate-900 text-white antialiased flex flex-col">
+      {/* Header */}
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-900/95 backdrop-blur-sm">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 flex items-center justify-between h-14 sm:h-16">
+          <button
+            type="button"
+            onClick={() => navigate('/')}
+            className="font-bold text-lg sm:text-xl tracking-tight"
           >
-            The 15-Second Application Flow for High-Volume UK Teams.
+            <span className="text-white">Hire</span>
+            <span className="text-blue-500">Fast</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate('/login')}
+            className="text-sm font-semibold text-slate-300 hover:text-white px-4 py-2.5 rounded-xl border border-white/20 hover:border-blue-500/50 hover:bg-white/5 transition"
+          >
+            Recruiter Login
+          </button>
+        </div>
+      </header>
+
+      <main className="flex-1 flex flex-col items-center justify-center px-4 py-12 sm:py-16">
+        <div className="w-full max-w-xl mx-auto text-center">
+          {/* Hero */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight">
+            The 15-Second Application Engine for UK Teams.
           </h1>
-          <p className="mt-4 sm:mt-6 text-slate-400 text-base sm:text-lg max-w-2xl mx-auto">
-            Choose your path below.
+          <p className="mt-4 sm:mt-6 text-slate-400 text-base sm:text-lg max-w-lg mx-auto leading-relaxed">
+            We fix the <strong className="text-slate-300">Drop-off</strong> and <strong className="text-slate-300">Ghosting</strong> crises.
+            The Truth Engine ranks candidates by commute and Right to Work—so you hire on verified data, not guesswork.
           </p>
-        </section>
 
-        {/* Split: Two large cards */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto">
-          {/* Card A: Candidate */}
-          <button
-            onClick={() => navigate('/jobs')}
-            className="group relative flex flex-col items-start text-left p-6 sm:p-8 rounded-2xl sm:rounded-3xl overflow-hidden min-h-[200px] sm:min-h-[240px] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-800/90 via-slate-800/80 to-indigo-900/40 border border-white/10 rounded-2xl sm:rounded-3xl" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(99,102,241,0.25),transparent)] rounded-2xl sm:rounded-3xl" />
-            <div className="relative w-full flex-1 flex flex-col">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center text-indigo-400 mb-4 sm:mb-5">
-                <Briefcase className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={2} />
+          {/* Waitlist */}
+          <div className="mt-10 sm:mt-14">
+            {success ? (
+              <div
+                className="rounded-2xl border border-emerald-500/40 bg-emerald-500/10 px-6 py-8 sm:py-10"
+                role="status"
+                aria-live="polite"
+              >
+                <p className="text-emerald-400 font-semibold text-lg sm:text-xl">
+                  You're on the list 🟢
+                </p>
+                <p className="text-slate-400 text-sm mt-2">
+                  We'll be in touch when we launch.
+                </p>
               </div>
-              <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
-                I am a Candidate
-              </h2>
-              <p className="text-slate-400 text-sm sm:text-base">
-                Find roles and apply in seconds.
+            ) : (
+              <form onSubmit={handleWaitlistSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                <label htmlFor="waitlist-email" className="sr-only">
+                  Email address
+                </label>
+                <input
+                  id="waitlist-email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@example.com"
+                  required
+                  autoComplete="email"
+                  disabled={loading}
+                  className="flex-1 min-h-[56px] rounded-xl border border-white/20 bg-white/5 px-5 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-60 text-base"
+                />
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="min-h-[56px] px-8 rounded-xl bg-blue-600 text-white font-semibold text-base hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900 disabled:opacity-60 transition"
+                >
+                  {loading ? 'Joining…' : 'Join Waitlist'}
+                </button>
+              </form>
+            )}
+            {error && (
+              <p className="mt-3 text-red-400 text-sm" role="alert">
+                {error}
               </p>
-              <span className="mt-auto pt-6 inline-flex items-center gap-2 text-indigo-400 font-semibold text-sm sm:text-base group-hover:gap-3 transition-all">
-                Go to job listings
-                <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
-              </span>
-            </div>
-          </button>
-
-          {/* Card B: Employer */}
-          <button
-            onClick={() => navigate('/employer/sales')}
-            className="group relative flex flex-col items-start text-left p-6 sm:p-8 rounded-2xl sm:rounded-3xl overflow-hidden min-h-[200px] sm:min-h-[240px] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-800/90 via-slate-800/80 to-amber-900/30 border border-white/10 rounded-2xl sm:rounded-3xl" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(245,158,11,0.2),transparent)] rounded-2xl sm:rounded-3xl" />
-            <div className="relative w-full flex-1 flex flex-col">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-amber-500/20 border border-amber-400/30 flex items-center justify-center text-amber-400 mb-4 sm:mb-5">
-                <Building2 className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={2} />
-              </div>
-              <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
-                I am an Employer
-              </h2>
-              <p className="text-slate-400 text-sm sm:text-base">
-                Get high-volume hires without the drop-off.
-              </p>
-              <span className="mt-auto pt-6 inline-flex items-center gap-2 text-amber-400 font-semibold text-sm sm:text-base group-hover:gap-3 transition-all">
-                Contact sales
-                <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
-              </span>
-            </div>
-          </button>
-        </section>
+            )}
+          </div>
+        </div>
       </main>
     </div>
   )
 }
-
-export default Home

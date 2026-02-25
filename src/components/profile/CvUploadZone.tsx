@@ -73,7 +73,7 @@ export default function CvUploadZone({ onTextReady, disabled }: CvUploadZoneProp
         onDragLeave={onDragLeave}
         className={`
           relative rounded-2xl border-2 border-dashed p-8 text-center transition
-          ${drag && !disabled ? 'border-[#f4601a] bg-amber-50/50' : 'border-slate-200 bg-slate-50/50'}
+          ${drag && !disabled ? 'border-blue-500 bg-blue-50/50' : 'border-slate-200 bg-slate-50/50'}
           ${disabled ? 'opacity-60 pointer-events-none' : ''}
         `}
       >
@@ -102,7 +102,7 @@ export default function CvUploadZone({ onTextReady, disabled }: CvUploadZoneProp
 export function ProcessingOverlay() {
   return (
     <div className="flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-slate-200 bg-slate-50/80 p-8">
-      <Loader2 className="w-12 h-12 animate-spin text-[#f4601a]" />
+      <Loader2 className="w-12 h-12 animate-spin text-blue-600" />
       <p className="font-semibold text-slate-700">Processing with AI…</p>
       <p className="text-slate-500 text-sm">Extracting your details from your CV</p>
     </div>

@@ -54,7 +54,7 @@ export default function LeadsTable() {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-black text-[#0d2547] tracking-tight">Applications</h1>
+      <h1 className="text-2xl font-black text-slate-900 tracking-tight">Applications</h1>
 
       <div className="flex flex-wrap gap-3">
         <input
@@ -62,7 +62,7 @@ export default function LeadsTable() {
           placeholder="Filter by status"
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="rounded-xl border border-slate-200 bg-white/80 backdrop-blur-sm px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0d2547] w-full sm:w-48"
+          className="rounded-xl border border-slate-200 bg-white/80 backdrop-blur-sm px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-48"
         />
       </div>
 
@@ -91,7 +91,7 @@ export default function LeadsTable() {
                   key={row.id}
                   className="border-b border-slate-100 bg-white/40 hover:bg-white/60 transition"
                 >
-                  <td className="py-3 px-4 font-semibold text-[#0d2547]">{row.full_name ?? '—'}</td>
+                  <td className="py-3 px-4 font-semibold text-slate-900">{row.full_name ?? '—'}</td>
                   <td className="py-3 px-4 text-slate-600">{row.email ?? '—'}</td>
                   <td className="py-3 px-4 text-slate-600">{row.phone ?? '—'}</td>
                   <td className="py-3 px-4">
@@ -102,7 +102,7 @@ export default function LeadsTable() {
                   <td className="py-3 px-4 text-right">
                     <a
                       href={`mailto:${row.email}`}
-                      className="inline-flex items-center gap-1.5 rounded-lg bg-[#0d2547] text-white px-3 py-2 text-xs font-semibold hover:opacity-90 transition"
+                      className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 text-xs font-semibold hover:opacity-90 transition"
                     >
                       <Mail size={14} /> Email
                     </a>
@@ -126,7 +126,7 @@ export default function LeadsTable() {
             >
               <div className="flex items-start justify-between gap-2">
                 <div>
-                  <p className="font-bold text-[#0d2547]">{row.full_name ?? '—'}</p>
+                  <p className="font-bold text-slate-900">{row.full_name ?? '—'}</p>
                   <p className="text-sm text-slate-600">{row.email ?? '—'}</p>
                   <p className="text-sm text-slate-500 mt-1">{row.phone ?? '—'}</p>
                   <span className="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-700 mt-2">
@@ -137,7 +137,7 @@ export default function LeadsTable() {
               <div className="mt-4">
                 <a
                   href={`mailto:${row.email}`}
-                  className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-[#0d2547] text-white py-2.5 text-sm font-semibold"
+                  className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white py-2.5 text-sm font-semibold"
                 >
                   <Mail size={16} /> Email
                 </a>

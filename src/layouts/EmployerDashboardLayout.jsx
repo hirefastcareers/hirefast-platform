@@ -23,7 +23,7 @@ export default function EmployerDashboardLayout() {
             onClick={() => navigate('/')}
             className="text-slate-900 font-bold text-lg tracking-tight hover:opacity-80 transition"
           >
-            Hire<span className="text-[#f4601a]">Fast</span>
+            <span className="text-slate-900">Hire</span><span className="text-blue-600">Fast</span>
           </button>
           <p className="text-xs text-slate-500 mt-1">Employer dashboard</p>
         </div>
@@ -64,7 +64,7 @@ export default function EmployerDashboardLayout() {
             onClick={() => navigate('/')}
             className="text-slate-900 font-bold tracking-tight"
           >
-            Hire<span className="text-[#f4601a]">Fast</span>
+            <span className="text-slate-900">Hire</span><span className="text-blue-600">Fast</span>
           </button>
           <button
             type="button"

@@ -192,7 +192,7 @@ export default function ExpressApplyDrawer({
         ) : (
           <form onSubmit={handleSubmit} className="space-y-5 pb-8">
             <p className="text-slate-400 text-sm">
-              Three fields. We’ll use your postcode to show your commute match.
+              Name, email, phone and postcode. We’ll use your postcode to show your commute match.
             </p>
             {error && (
               <div className="rounded-xl bg-red-500/20 border border-red-500/30 text-red-400 text-sm p-3">

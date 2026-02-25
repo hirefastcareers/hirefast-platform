@@ -68,7 +68,7 @@ export default function ApplicantQuickView({ application, onClose }) {
           </div>
           <div>
             <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-1">Email</p>
-            <a href={`mailto:${email}`} className="text-[#0d2547] font-medium hover:underline">
+            <a href={`mailto:${email}`} className="text-blue-600 font-medium hover:underline">
               {email ?? '—'}
             </a>
           </div>
@@ -85,7 +85,7 @@ export default function ApplicantQuickView({ application, onClose }) {
           {rtw_document_url && (
             <div>
               <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-1"><FileCheck className="inline w-3.5 h-3.5 mr-1" /> Right to Work / Licence</p>
-              <a href={rtw_document_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-[#0d2547] font-medium hover:underline">
+              <a href={rtw_document_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-blue-600 font-medium hover:underline">
                 View document <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </div>

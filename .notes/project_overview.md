@@ -9,6 +9,12 @@ To eliminate the "Drop-off Crisis" and the "Ghosting Crisis" in high-volume UK r
 - **Authentication:** Passwordless Magic Links only.
 - **External APIs:** Postcodes.io (Commute calculation).
 
+## 🎨 Brand Colours (site-wide)
+Use only these three colours across the site:
+- **Blue** — Logo “Fast”, primary CTAs, links, focus rings. Tailwind: `blue-600` (#2563eb), hover `blue-700`.
+- **Black** — Logo “Hire”, headings, dark buttons/surfaces. Tailwind: `slate-900` (or equivalent dark).
+- **White** — Backgrounds, cards, light surfaces. Tailwind: `white`, `slate-50` for subtle off-white.
+
 ## 🧩 The Problems We Are Solving
 1. **Drop-off Crisis:** Reducing application time from minutes to 15 seconds.
 2. **Sifting Fatigue:** Automated ranking using "Truth Data" (Commute distance, Right to Work).

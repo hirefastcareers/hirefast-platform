@@ -5,6 +5,7 @@ import { useEmployer } from '../contexts/EmployerContext'
 import { TICKET_OPTIONS } from '../constants/skills'
 import { getCoordinates } from '../utils/commute'
 import DevToolSeedData from '../components/DevToolSeedData'
+import ApplicantsListSkeleton from '../components/dashboard/ApplicantsListSkeleton'
 
 type ApplicationRow = {
   id: string
@@ -358,6 +359,7 @@ const initialForm = {
   postcode: '',
   required_skills: [] as string[],
   auto_reject_low_matches: false,
+  immediate_start: false,
 }
 
 export default function RecruiterDashboard() {
@@ -379,6 +381,7 @@ export default function RecruiterDashboard() {
   const [hideRejected, setHideRejected] = useState(true)
   const [updatingId, setUpdatingId] = useState<string | null>(null)
   const [sendingInterestCheckId, setSendingInterestCheckId] = useState<string | null>(null)
+  const [interestCheckToast, setInterestCheckToast] = useState<string | null>(null)
   type PostcodeValidation = 'idle' | 'validating' | 'valid' | 'invalid'
   const [postcodeValidation, setPostcodeValidation] = useState<PostcodeValidation>('idle')
 
@@ -512,11 +515,23 @@ export default function RecruiterDashboard() {
           )
         )
       )
-      const baseUrl = typeof window !== 'undefined' ? window.location.origin : ''
-      const magicLinkUrl = `${baseUrl}/confirm-interest/${applicationId}?t=${token}`
-      console.log('[Interest Check] Magic link (simulated – will be sent via Resend/SMS):', magicLinkUrl)
+      const { data, error: fnError } = await supabase.functions.invoke('send-interest-check', {
+        body: { application_id: applicationId },
+      })
+      if (fnError) {
+        setInterestCheckToast('Interest check saved. Could not send email—check your connection.')
+      } else if (data?.sent) {
+        setInterestCheckToast('Interest check email sent to the candidate.')
+      } else if (data?.magic_link) {
+        setInterestCheckToast('Link saved. Email not configured—copy the link from the browser console.')
+        console.log('[Interest Check] Magic link:', data.magic_link)
+      } else {
+        setInterestCheckToast(data?.error ?? 'Interest check saved. Email not configured.')
+      }
+      setTimeout(() => setInterestCheckToast(null), 5000)
     } catch {
-      // Keep UI unchanged on error
+      setInterestCheckToast('Failed to save interest check.')
+      setTimeout(() => setInterestCheckToast(null), 5000)
     } finally {
       setSendingInterestCheckId(null)
     }
@@ -598,6 +613,7 @@ export default function RecruiterDashboard() {
           sector: selectedSector ?? null,
           required_skills: (form.required_skills?.length ? form.required_skills : []) as string[],
           auto_reject_low_matches: form.auto_reject_low_matches ?? false,
+          immediate_start: form.immediate_start ?? false,
         })
         .select('id')
         .single()
@@ -606,7 +622,7 @@ export default function RecruiterDashboard() {
       if (!inserted?.id) throw new Error('No job id returned.')
 
       setNewJobId(inserted.id)
-      setForm({ ...initialForm, postcode: form.postcode, required_skills: [] })
+      setForm({ ...initialForm, postcode: form.postcode, required_skills: [], immediate_start: false })
       setSelectedSector(null)
     } catch (err: unknown) {
       const message =
@@ -715,6 +731,15 @@ export default function RecruiterDashboard() {
           {updateErrorToast}
         </div>
       )}
+      {interestCheckToast && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 max-w-md rounded-xl border border-emerald-500/50 bg-emerald-950/90 shadow-xl px-4 py-3 text-emerald-200 text-sm toast-enter"
+        >
+          {interestCheckToast}
+        </div>
+      )}
       <div className="max-w-4xl mx-auto">
       <header className="mb-8">
         <div className="flex gap-1 p-1 rounded-xl bg-slate-800/80 border border-slate-700/80 w-fit">
@@ -774,12 +799,7 @@ export default function RecruiterDashboard() {
             </label>
           </div>
           <div className="p-4 sm:p-6">
-            {applicationsLoading && (
-              <div className="flex items-center justify-center py-12 gap-3 text-slate-400">
-                <div className="w-8 h-8 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
-                <span className="font-medium">Loading applicants…</span>
-              </div>
-            )}
+            {applicationsLoading && <ApplicantsListSkeleton />}
             {!applicationsLoading && applicationsError && (
               <p className="text-red-400 font-medium py-6">{applicationsError}</p>
             )}
@@ -943,6 +963,21 @@ export default function RecruiterDashboard() {
                 </div>
               </div>
             </div>
+          </div>
+
+          <div className="rounded-xl border border-slate-600/50 bg-slate-800/30 p-4">
+            <label className="flex items-center gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={form.immediate_start ?? false}
+                onChange={(e) => setForm((f) => ({ ...f, immediate_start: e.target.checked }))}
+                className="w-4 h-4 rounded border-slate-500 bg-slate-800 text-indigo-500 focus:ring-indigo-400"
+              />
+              <span className="text-sm font-medium text-white">Immediate Start</span>
+            </label>
+            <p className="text-slate-400 text-sm mt-1 ml-7">
+              Show an &quot;Immediate Start&quot; badge on this job in the candidate job list.
+            </p>
           </div>
 
           <div className="rounded-xl border border-slate-600/50 bg-slate-800/30 p-4">

@@ -39,11 +39,11 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0d2547] flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-slate-900 flex items-center justify-center px-4 py-12">
       <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md border border-[#d5e0ee]/20">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-black text-[#0d2547]">
-            Hire<span className="text-[#f4601a]">Fast</span>
+          <h1 className="text-3xl font-black text-slate-900">
+            Hire<span className="text-blue-600">Fast</span>
           </h1>
           <p className="text-[#5a6e8a] mt-2 text-sm font-medium">
             Recruiter Command Centre — sign in
@@ -60,7 +60,7 @@ export default function Login() {
           <div>
             <label
               htmlFor="login-email"
-              className="block text-sm font-bold text-[#0d2547] mb-1"
+              className="block text-sm font-bold text-slate-900 mb-1"
             >
               Email
             </label>
@@ -71,7 +71,7 @@ export default function Login() {
               onChange={(e) => setEmail(e.target.value)}
               required
               placeholder="you@company.com"
-              className="w-full border border-[#d5e0ee] rounded-xl px-4 py-3 text-sm text-[#0d2547] placeholder:text-[#5a6e8a] focus:outline-none focus:ring-2 focus:ring-[#f4601a]/50 focus:border-[#f4601a] transition"
+              className="w-full border border-[#d5e0ee] rounded-xl px-4 py-3 text-sm text-slate-900 placeholder:text-[#5a6e8a] focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition"
               autoComplete="email"
             />
           </div>
@@ -79,14 +79,14 @@ export default function Login() {
             <div className="flex items-center justify-between mb-1">
               <label
                 htmlFor="login-password"
-                className="block text-sm font-bold text-[#0d2547]"
+                className="block text-sm font-bold text-slate-900"
               >
                 Password
               </label>
               <button
                 type="button"
                 onClick={() => navigate('/employer/forgot-password')}
-                className="text-sm text-[#0d2547] font-medium hover:underline"
+                className="text-sm text-slate-900 font-medium hover:underline"
               >
                 Forgot password?
               </button>
@@ -98,14 +98,14 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
               required
               placeholder="Your password"
-              className="w-full border border-[#d5e0ee] rounded-xl px-4 py-3 text-sm text-[#0d2547] placeholder:text-[#5a6e8a] focus:outline-none focus:ring-2 focus:ring-[#f4601a]/50 focus:border-[#f4601a] transition"
+              className="w-full border border-[#d5e0ee] rounded-xl px-4 py-3 text-sm text-slate-900 placeholder:text-[#5a6e8a] focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition"
               autoComplete="current-password"
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="bg-[#f4601a] text-white py-4 rounded-xl font-bold text-base hover:opacity-90 transition disabled:opacity-50 mt-1"
+            className="bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-bold text-base hover:opacity-90 transition disabled:opacity-50 mt-1"
           >
             {loading ? 'Signing in…' : 'Sign in'}
           </button>
