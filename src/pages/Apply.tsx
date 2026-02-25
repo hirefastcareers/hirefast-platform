@@ -133,21 +133,21 @@ export default function Apply() {
 
   if (loadingJob) {
     return (
-      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6">
-        <Loader2 className="w-10 h-10 animate-spin text-amber-400" aria-hidden />
-        <p className="text-slate-400 mt-4 font-medium">Loading role…</p>
+      <div className="min-h-screen bg-[#000000] flex flex-col items-center justify-center p-6">
+        <Loader2 className="w-10 h-10 animate-spin text-[#0a84ff]" aria-hidden />
+        <p className="text-[#a1a1a6] mt-6 font-medium">Loading role…</p>
       </div>
     )
   }
 
   if (!job && !loadingJob) {
     return (
-      <div className="min-h-screen bg-slate-950 text-white flex flex-col items-center justify-center p-6">
-        <p className="text-slate-400">Job not found.</p>
+      <div className="min-h-screen bg-[#000000] text-white flex flex-col items-center justify-center p-6">
+        <p className="text-[#a1a1a6]">Job not found.</p>
         <button
           type="button"
           onClick={() => navigate('/jobs')}
-          className="mt-4 text-amber-400 font-medium hover:underline"
+          className="mt-6 rounded-full px-5 py-2.5 bg-[#0a84ff] text-white font-medium hover:opacity-90 transition-all duration-500"
         >
           Back to roles
         </button>
@@ -157,19 +157,19 @@ export default function Apply() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-slate-950 text-white antialiased">
+      <div className="min-h-screen bg-[#000000] text-white antialiased">
         <Navbar />
-        <main className="relative max-w-lg mx-auto px-4 py-16 text-center">
-          <div className="rounded-2xl border border-white/10 bg-slate-800/50 p-8">
-            <CheckCircle2 className="w-16 h-16 text-emerald-400 mx-auto mb-4" aria-hidden />
-            <h1 className="text-2xl font-bold text-white mb-2">Success!</h1>
-            <p className="text-slate-300 mb-6">
+        <main className="relative max-w-lg mx-auto px-4 py-20 text-center">
+          <div className="rounded-2xl apple-glass p-10 border-t border-white/10">
+            <CheckCircle2 className="w-16 h-16 text-[#30d158] mx-auto mb-6" aria-hidden />
+            <h1 className="text-4xl font-bold text-white tracking-tighter mb-3">Success!</h1>
+            <p className="text-[#a1a1a6] mb-8 text-lg">
               Application Sent! {companyName} will contact you shortly if it&apos;s a match.
             </p>
             <button
               type="button"
               onClick={() => navigate('/jobs')}
-              className="w-full rounded-xl bg-amber-500 text-slate-900 font-bold py-3.5 hover:bg-amber-400 transition"
+              className="w-full rounded-full bg-[#0a84ff] text-white font-semibold py-4 hover:opacity-90 transition-all duration-500"
             >
               Find more roles
             </button>
@@ -180,35 +180,30 @@ export default function Apply() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white antialiased">
-      <div className="fixed inset-0 overflow-hidden pointer-events-none" aria-hidden>
-        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px]" />
-        <div className="absolute top-1/2 -left-40 w-[400px] h-[400px] bg-amber-500/5 rounded-full blur-[100px]" />
-      </div>
-
+    <div className="min-h-screen bg-[#000000] text-white antialiased">
       <Navbar />
 
-      <main className="relative max-w-lg mx-auto px-4 py-8 sm:py-10">
-        <h1 className="text-2xl font-bold text-white tracking-tight mb-1">
+      <main className="relative max-w-lg mx-auto px-4 py-12 sm:py-16">
+        <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tighter mb-2">
           {job?.title ?? 'Apply'}
         </h1>
-        <p className="text-slate-400 text-sm mb-1">
+        <p className="text-[#a1a1a6] text-lg mb-1">
           {job?.employers?.company_name ?? ''}
         </p>
         {job?.pay_rate && (
-          <p className="text-amber-400 text-sm font-medium mb-6">{job.pay_rate}</p>
+          <p className="text-[#30d158] text-sm font-medium mt-2 mb-10">{job.pay_rate}</p>
         )}
-        {!job?.pay_rate && <div className="mb-6" />}
+        {!job?.pay_rate && <div className="mb-10" />}
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-6">
           {error && (
-            <div className="rounded-xl bg-red-500/20 border border-red-500/30 text-red-400 text-sm p-3">
+            <div className="rounded-2xl bg-[#ff453a]/15 border border-white/10 text-[#ff453a] text-sm p-4">
               {error}
             </div>
           )}
 
           <div>
-            <label htmlFor="apply-name" className="block text-sm font-medium text-slate-300 mb-1.5">
+            <label htmlFor="apply-name" className="block text-sm font-medium text-[#a1a1a6] mb-2">
               Full Name
             </label>
             <input
@@ -218,13 +213,13 @@ export default function Apply() {
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               placeholder="e.g. Alex Smith"
-              className="w-full rounded-xl border border-white/10 bg-slate-800 px-4 py-3.5 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
+              className="w-full rounded-2xl border border-white/10 bg-[#1c1c1e]/60 px-4 py-3.5 text-white placeholder-[#a1a1a6] focus:outline-none focus:ring-2 focus:ring-[#0a84ff]/30 focus:border-[#0a84ff] transition-all duration-500"
               autoComplete="name"
             />
           </div>
 
           <div>
-            <label htmlFor="apply-email" className="block text-sm font-medium text-slate-300 mb-1.5">
+            <label htmlFor="apply-email" className="block text-sm font-medium text-[#a1a1a6] mb-2">
               Email
             </label>
             <input
@@ -234,13 +229,13 @@ export default function Apply() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="e.g. alex@example.com"
-              className="w-full rounded-xl border border-white/10 bg-slate-800 px-4 py-3.5 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
+              className="w-full rounded-2xl border border-white/10 bg-[#1c1c1e]/60 px-4 py-3.5 text-white placeholder-[#a1a1a6] focus:outline-none focus:ring-2 focus:ring-[#0a84ff]/30 focus:border-[#0a84ff] transition-all duration-500"
               autoComplete="email"
             />
           </div>
 
           <div>
-            <label htmlFor="apply-phone" className="block text-sm font-medium text-slate-300 mb-1.5">
+            <label htmlFor="apply-phone" className="block text-sm font-medium text-[#a1a1a6] mb-2">
               Phone Number
             </label>
             <input
@@ -249,13 +244,13 @@ export default function Apply() {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="e.g. 07123 456789"
-              className="w-full rounded-xl border border-white/10 bg-slate-800 px-4 py-3.5 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
+              className="w-full rounded-2xl border border-white/10 bg-[#1c1c1e]/60 px-4 py-3.5 text-white placeholder-[#a1a1a6] focus:outline-none focus:ring-2 focus:ring-[#0a84ff]/30 focus:border-[#0a84ff] transition-all duration-500"
               autoComplete="tel"
             />
           </div>
 
           <div>
-            <label htmlFor="apply-postcode" className="block text-sm font-medium text-slate-300 mb-1.5">
+            <label htmlFor="apply-postcode" className="block text-sm font-medium text-[#a1a1a6] mb-2">
               Where are you travelling from?
             </label>
             <input
@@ -264,7 +259,7 @@ export default function Apply() {
               value={postcode}
               onChange={(e) => setPostcode(e.target.value.toUpperCase().replace(/[^A-Z0-9\s]/gi, '').slice(0, 8))}
               placeholder="e.g. SW1A 1AA"
-              className="w-full rounded-xl border border-white/10 bg-slate-800 px-4 py-3.5 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
+              className="w-full rounded-2xl border border-white/10 bg-[#1c1c1e]/60 px-4 py-3.5 text-white placeholder-[#a1a1a6] focus:outline-none focus:ring-2 focus:ring-[#0a84ff]/30 focus:border-[#0a84ff] transition-all duration-500"
               autoComplete="postal-code"
             />
           </div>
@@ -272,7 +267,7 @@ export default function Apply() {
           <button
             type="submit"
             disabled={submitting || !fullName.trim() || !email.trim()}
-            className="w-full rounded-xl bg-amber-500 text-slate-900 font-bold py-4 text-base hover:bg-amber-400 disabled:opacity-50 disabled:pointer-events-none transition"
+            className="w-full rounded-full bg-[#0a84ff] text-white font-semibold py-4 text-base hover:opacity-90 disabled:opacity-50 disabled:pointer-events-none transition-all duration-500"
           >
             {submitting ? 'Sending…' : 'Submit Application'}
           </button>

@@ -12,17 +12,17 @@ function DashboardLayout() {
   ]
 
   return (
-    <div className="min-h-screen bg-slate-100/80">
-      {/* Glassmorphism Sidebar - fixed on desktop, collapsible on mobile */}
-      <aside className="fixed left-0 top-0 z-40 h-full w-64 border-r border-white/20 bg-white/60 backdrop-blur-xl lg:flex flex-col hidden">
-        <div className="p-6 border-b border-white/20">
+    <div className="min-h-screen bg-[#000000]">
+      {/* Sidebar — Apple Glass */}
+      <aside className="fixed left-0 top-0 z-40 h-full w-64 border-t border-white/10 bg-[#1c1c1e]/60 backdrop-blur-xl lg:flex flex-col hidden">
+        <div className="p-6 border-b border-white/10">
           <button
             onClick={() => navigate('/')}
-            className="text-[#0d2547] font-black text-xl tracking-tight hover:opacity-90 transition"
+            className="text-white font-bold text-xl tracking-tighter hover:opacity-90 transition-all duration-500"
           >
-            Hire<span className="text-[#f4601a]">Fast</span>
+            Hire<span className="text-[#30d158]">Fast</span>
           </button>
-          <p className="text-xs text-slate-500 mt-1 font-medium">Recruiter Command Centre</p>
+          <p className="text-xs text-[#a1a1a6] mt-1 font-medium">Recruiter Command Centre</p>
         </div>
         <nav className="flex-1 p-4 space-y-1">
           {navItems.map(({ to, icon: Icon, label }) => (
@@ -31,10 +31,10 @@ function DashboardLayout() {
               to={to}
               end={to === '/dashboard'}
               className={({ isActive }) =>
-                `flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition ${
+                `flex items-center gap-3 rounded-full px-4 py-3 text-sm font-semibold transition-all duration-500 ${
                   isActive
-                    ? 'bg-[#0d2547] text-white shadow-lg shadow-[#0d2547]/20'
-                    : 'text-slate-600 hover:bg-white/60 hover:text-[#0d2547]'
+                    ? 'bg-[#0a84ff] text-white'
+                    : 'text-[#a1a1a6] hover:bg-white/10 hover:text-white'
                 }`
               }
             >
@@ -47,24 +47,24 @@ function DashboardLayout() {
 
       {/* Mobile: top bar + nav tabs */}
       <div className="lg:hidden">
-        <header className="sticky top-0 z-30 flex items-center gap-4 border-b border-white/20 bg-white/70 backdrop-blur-xl px-4 py-3">
+        <header className="sticky top-0 z-30 flex items-center gap-4 border-b border-white/10 bg-[#1c1c1e]/60 backdrop-blur-xl px-4 py-3">
           <button
             onClick={() => navigate('/')}
-            className="text-[#0d2547] font-black text-lg tracking-tight"
+            className="text-white font-bold text-lg tracking-tighter"
           >
-            Hire<span className="text-[#f4601a]">Fast</span>
+            Hire<span className="text-[#30d158]">Fast</span>
           </button>
-          <span className="text-xs text-slate-500 font-medium">Command Centre</span>
+          <span className="text-xs text-[#a1a1a6] font-medium">Command Centre</span>
         </header>
-        <nav className="flex gap-1 border-b border-slate-200/80 bg-white/50 backdrop-blur-sm px-2 py-2">
+        <nav className="flex gap-1 border-b border-white/10 bg-[#1c1c1e]/40 backdrop-blur-xl px-2 py-2">
           {navItems.map(({ to, icon: Icon, label }) => (
             <NavLink
               key={to}
               to={to}
               end={to === '/dashboard'}
               className={({ isActive }) =>
-                `flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold transition ${
-                  isActive ? 'bg-[#0d2547] text-white' : 'text-slate-600 hover:bg-white/80'
+                `flex items-center gap-2 rounded-full px-3 py-2 text-xs font-semibold transition-all duration-500 ${
+                  isActive ? 'bg-[#0a84ff] text-white' : 'text-[#a1a1a6] hover:bg-white/10 hover:text-white'
                 }`
               }
             >
@@ -76,7 +76,7 @@ function DashboardLayout() {
       </div>
 
       <main className="lg:pl-64 min-h-screen">
-        <div className="p-4 sm:p-6">
+        <div className="p-0">
           <Outlet />
         </div>
       </main>
